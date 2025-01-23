@@ -16,8 +16,7 @@ public class Botzilla {
         System.out.println(horizontalLine);
         System.out.println("\t Hello! I'm Botzilla");
         System.out.println("\t What can I do for you?");
-        System.out.println(horizontalLine);
-
+        System.out.println(endFormat);
 
         while (true) {
             String input = scanner.nextLine();
@@ -83,15 +82,11 @@ public class Botzilla {
                 System.out.println(endFormat);
                 numberOfTasks++;
             } else {
-                taskList.add(new Task(input));
-                numberOfTasks++;
                 System.out.println(horizontalLine);
-                System.out.println("\t " + "added: " + input);
+                System.out.println("\t Invalid Input. Please try again.");
                 System.out.println(endFormat);
             }
         }
-
         scanner.close();
     }
 }
-
