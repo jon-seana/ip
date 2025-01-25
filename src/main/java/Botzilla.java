@@ -26,16 +26,22 @@ public class Botzilla {
             String[] message = input.split(" ");
 
             if (input.trim().equals("list")) {
-                System.out.println(horizontalLine);
-                System.out.println("\t Here are the tasks in your list:");
-                int lengthOfList = taskList.size();
-                for (int i = 0; i < lengthOfList; i++) {
-                    if (taskList.get(i) != null) {
-                        int b = i + 1;
-                        System.out.println("\t " + b + "." + taskList.get(i).toString());
+                if(taskList.isEmpty()) {
+                    System.out.println(horizontalLine);
+                    System.out.println("\t You have no tasks in your list.");
+                    System.out.println(endFormat);
+                } else {
+                    System.out.println(horizontalLine);
+                    System.out.println("\t Here are the tasks in your list:");
+                    int lengthOfList = taskList.size();
+                    for (int i = 0; i < lengthOfList; i++) {
+                        if (taskList.get(i) != null) {
+                            int b = i + 1;
+                            System.out.println("\t " + b + "." + taskList.get(i).toString());
+                        }
                     }
+                    System.out.println(endFormat);
                 }
-                System.out.println(endFormat);
             } else if (input.trim().equals("bye")) {
                 System.out.println(horizontalLine);
                 System.out.println("\t Bye. Hope to see you again soon!");
@@ -75,19 +81,26 @@ public class Botzilla {
                 System.out.println(endFormat);
             } else if (message[0].equals("todo")) {
                 try {
-                    taskList.add(new Todo(input.substring(5)));
+                    if (input.substring(5).trim().equals("")) {
+                        System.out.println(horizontalLine);
+                        System.out.println("\t Hi there! Please add at least one word after the command.");
+                        System.out.println(endFormat);
+                        continue;
+                    } else {
+                        taskList.add(new Todo(input.substring(5)));
+                    }
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println(horizontalLine);
                     System.out.println("\t Hi there! Please add a description for a todo task.");
                     System.out.println(endFormat);
                     continue;
                 }
+                numberOfTasks++;
                 System.out.println(horizontalLine);
                 System.out.println(taskFirstLine);
-                System.out.println("\t   " + taskList.get(numberOfTasks).toString());
-                System.out.println("\t Now you have " + (numberOfTasks + 1) + " tasks in the list.");
+                System.out.println("\t   " + taskList.get(numberOfTasks - 1).toString());
+                System.out.println("\t Now you have " + (numberOfTasks) + " tasks in the list.");
                 System.out.println(endFormat);
-                numberOfTasks++;
             } else if (message[0].equals("deadline")) {
                 try {
                     String[] deadlineInput = input.split(" /by ");
@@ -100,12 +113,12 @@ public class Botzilla {
                     System.out.println(endFormat);
                     continue;
                 }
+                numberOfTasks++;
                 System.out.println(horizontalLine);
                 System.out.println(taskFirstLine);
-                System.out.println("\t   " + taskList.get(numberOfTasks).toString());
-                System.out.println("\t Now you have " + (numberOfTasks + 1) + " tasks in the list.");
+                System.out.println("\t   " + taskList.get(numberOfTasks - 1).toString());
+                System.out.println("\t Now you have " + (numberOfTasks) + " tasks in the list.");
                 System.out.println(endFormat);
-                numberOfTasks++;
             } else if (message[0].equals("event")) {
                 try {
                     String[] eventInput = input.split(" /from ");
@@ -119,12 +132,28 @@ public class Botzilla {
                     System.out.println(endFormat);
                     continue;
                 }
+                numberOfTasks++;
                 System.out.println(horizontalLine);
                 System.out.println(taskFirstLine);
-                System.out.println("\t   " + taskList.get(numberOfTasks).toString());
-                System.out.println("\t Now you have " + (numberOfTasks + 1) + " tasks in the list.");
+                System.out.println("\t   " + taskList.get(numberOfTasks - 1).toString());
+                System.out.println("\t Now you have " + (numberOfTasks) + " tasks in the list.");
                 System.out.println(endFormat);
-                numberOfTasks++;
+            } else if (message[0].equals("delete")) {
+                try {
+                    taskList.get(Integer.parseInt(message[1]) - 1);
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println(horizontalLine);
+                    System.out.println("\t Hi there! Please enter a valid task number you want to delete." + "\n" + "\t The task number you provided may have been removed or may not exist at all.");
+                    System.out.println(endFormat);
+                    continue;
+                }
+                numberOfTasks--;
+                System.out.println(horizontalLine);
+                System.out.println("\t Noted. I've removed this task:");
+                System.out.println("\t   " + taskList.get(Integer.parseInt(message[1]) - 1).toString());
+                System.out.println("\t Now you have " + (numberOfTasks) + " tasks in the list.");
+                System.out.println(endFormat);
+                taskList.remove(Integer.parseInt(message[1]) - 1);
             } else {
                 System.out.println(horizontalLine);
                 System.out.println("\t Hey! I don't understand what you want me to do :(");
