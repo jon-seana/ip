@@ -3,9 +3,13 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Botzilla {
     private static final String FILE_PATH = "src/main/tasks.txt";
@@ -41,8 +45,8 @@ public class Botzilla {
                     tasks.add(toDo);
                 } else if (type.equals("D")) {
                     String description = line.substring(7, line.indexOf("(by:")).trim();
-                    String byDate = line.substring(line.indexOf(":") + 2, line.indexOf(")")).trim();
-                    Deadline deadline = new Deadline(description, byDate);
+                    String date = line.substring(line.indexOf(":") + 2, line.indexOf(")")).trim();
+                    Deadline deadline = new Deadline(description, date);
                     if (isDone) {
                         deadline.markAsDone();
                     }
@@ -184,13 +188,31 @@ public class Botzilla {
             } else if (message[0].equals("deadline")) {
                 try {
                     String[] deadlineInput = input.split(" /by ");
-                    String description = deadlineInput[0].substring(9);
-                    String byDate = deadlineInput[1];
+                    String description = deadlineInput[0].substring(9).trim();
+                    String date = deadlineInput[1].trim();
+                    LocalDateTime byDate;
+
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+                    DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-d HHmm");
+
+                    if (date.contains("/")) {
+                        byDate = LocalDateTime.parse(date, formatter);
+                    } else if (date.contains("-")) {
+                        byDate = LocalDateTime.parse(date, formatter2);
+                    } else {
+                        throw new DateTimeParseException("Invalid date format", date, 0);
+                    }
+
                     taskList.add(new Deadline(description, byDate));
                     saveTask(taskList);
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println(horizontalLine);
-                    System.out.println("\t Hi there! Please follow the format: deadline task /by time.");
+                    System.out.println("\t Hi there! Please follow the correct format!!");
+                    System.out.println(endFormat);
+                    continue;
+                } catch (DateTimeParseException e) {
+                    System.out.println(horizontalLine);
+                    System.out.println("\t Hi there! Please follow the format: deadline task /by d/mm/yyyy HHmm.");
                     System.out.println(endFormat);
                     continue;
                 }
@@ -221,8 +243,12 @@ public class Botzilla {
                 System.out.println("\t Now you have " + taskList.size() + " tasks in the list.");
                 System.out.println(endFormat);
             } else if (message[0].equals("delete")) {
+                String deleted;
                 try {
-                    taskList.get(Integer.parseInt(message[1]) - 1);
+                    deleted = taskList.get(Integer.parseInt(message[1]) - 1).toString();
+                    taskList.remove(Integer.parseInt(message[1]) - 1);
+                    saveTask(taskList);
+                    //taskList.get(Integer.parseInt(message[1]) - 1);
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println(horizontalLine);
                     System.out.println("\t Hi there! Please enter a valid task number you want to delete." + "\n" + "\t The task number you provided may have been removed or may not exist at all.");
@@ -232,10 +258,9 @@ public class Botzilla {
                 numberOfTasks--;
                 System.out.println(horizontalLine);
                 System.out.println("\t Noted. I've removed this task:");
-                System.out.println("\t   " + taskList.get(Integer.parseInt(message[1]) - 1).toString());
-                System.out.println("\t Now you have " + (numberOfTasks) + " tasks in the list.");
+                System.out.println("\t   " + deleted);
+                System.out.println("\t Now you have " + taskList.size() + " tasks in the list.");
                 System.out.println(endFormat);
-                taskList.remove(Integer.parseInt(message[1]) - 1);
             } else {
                 System.out.println(horizontalLine);
                 System.out.println("\t Hey! I don't understand what you want me to do :(");
