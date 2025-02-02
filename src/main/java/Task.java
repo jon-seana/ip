@@ -23,6 +23,10 @@ public class Task {
         isDone = false;
     }
 
+    public String saveData() {
+        return description;
+    }
+
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
     }

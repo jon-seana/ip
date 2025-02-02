@@ -1,0 +1,7 @@
+[T][X] wash car
+[T][ ] drink water
+[T][ ] cook chicken
+[D][ ] boil egg (by: noon)
+[T][ ] make potato salad
+[E][ ] make bread (from: noon to: night)
+[E][X] boil water (from: Aug 7th to: Aug 8th)
