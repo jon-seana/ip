@@ -1,3 +1,8 @@
+package botzilla.task;
+
+import botzilla.ui.Ui;
+import botzilla.exception.BotzillaException;
+
 import java.util.ArrayList;
 
 public class TaskList {

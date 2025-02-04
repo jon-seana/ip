@@ -1,3 +1,5 @@
+package botzilla.ui;
+
 import java.util.Scanner;
 
 public class Ui {
@@ -15,7 +17,7 @@ public class Ui {
 
     public void showGreeting() {
         System.out.println(horizontalLine);
-        System.out.println("\t Hello! I'm Botzilla");
+        System.out.println("\t Hello! I'm botzilla.Botzilla");
         System.out.println("\t What can I do for you?");
         System.out.println(endFormat);
     }

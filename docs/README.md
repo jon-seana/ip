@@ -1,4 +1,4 @@
-# Botzilla User Guide
+# botzilla.Botzilla User Guide
 
 // Update the title above to match the actual product name
 

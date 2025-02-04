@@ -1,3 +1,10 @@
+package botzilla;
+
+import botzilla.command.Parser;
+import botzilla.exception.BotzillaException;
+import botzilla.storage.Storage;
+import botzilla.task.TaskList;
+import botzilla.ui.Ui;
 
 public class Botzilla {
     private static Storage storage;

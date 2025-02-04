@@ -1,5 +1,7 @@
 [T][X] make bread
 [D][ ] return cup (by: Oct 15 2019, 4:00 pm)
 [D][X] return book (by: Dec 2 2019, 6:00 pm)
-[D][ ] return bike (by: Oct 15 2026, 5:30 pm)
 [E][ ] buy water (from: noon to: night)
+[T][X] eat lunch
+[D][ ] eat breakfast (by: Feb 4 2025, 3:30 pm)
+[E][ ] meeting with shawn (from: Feb 4 2025, 3:30 pm to: Feb 4 2025, 4:30 pm)
