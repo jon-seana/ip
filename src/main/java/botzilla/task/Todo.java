@@ -4,11 +4,13 @@ import botzilla.ui.Ui;
 import botzilla.task.Task;
 import botzilla.task.TaskList;
 
+/**
+ * Represents the class for todo task.
+ */
 public class Todo extends Task {
     public Todo(String description) {
         super(description);
     }
-
     /**
      * Creates a new Todo task from the given input.
      * The input should start with "todo" followed by a description.
@@ -32,11 +34,19 @@ public class Todo extends Task {
         }
     }
 
+    /**
+     * Method for creating a string when data is saved.
+     * @return String
+     */
     @Override
     public String saveData() {
         return "[T]" + super.toString();
     }
 
+    /**
+     * Method for todo toString implementation.
+     * @return String
+     */
     @Override
     public String toString() {
         return "[T]" + super.toString();

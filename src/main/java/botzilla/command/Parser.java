@@ -9,7 +9,8 @@ import botzilla.task.Event;
 import botzilla.exception.BotzillaException;
 
 /**
- *
+ * Represents a class for the Parser constructor and parse method which takes in a String input and
+ * selects the appropriate actions to be taken based on the type of input (e.g. todo, list, bye, etc...).
  */
 public class Parser {
     private final TaskList taskList;
@@ -17,10 +18,11 @@ public class Parser {
     private final Ui ui;
 
     /**
+     * The constructor for Parser class.
      *
-     * @param taskList
-     * @param storage
-     * @param ui
+     * @param taskList Tasklist.
+     * @param storage Storage.
+     * @param ui Ui.
      */
     public Parser(TaskList taskList, Storage storage, Ui ui) {
         this.taskList = taskList;
@@ -29,8 +31,9 @@ public class Parser {
     }
 
     /**
+     *  Choose a variety of actions depending on the String input.
      *
-     * @param input
+     * @param input Input command.
      */
     public void parse(String input) {
         String taskFirstLine = "\t Got it. I've added this task:";

@@ -6,23 +6,46 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Represents the class for the task event.
+ * Contains method for creating an event as well as relevant methods required for event.
+ */
 public class Event extends Task {
     protected String from;
     protected String to;
     protected LocalDateTime fromDate;
     protected LocalDateTime toDate;
 
+    /**
+     * Constructor for event class with LocalDateTime as the date and time type.
+     * @param description Description of event.
+     * @param from start date and time of event in LocalDateTime object type.
+     * @param to end date and time of event in LocalDateTime object type.
+     */
     public Event(String description, LocalDateTime from, LocalDateTime to) {
         super(description);
         this.fromDate = from;
         this.toDate = to;
     }
+
+    /**
+     * Constructor for event class with String as the date and time type.
+     * @param description Description of event.
+     * @param from start date and time of event in String object type.
+     * @param to end date and time of event in String object type.
+     */
     public Event(String description, String from, String to) {
         super(description);
         this.from = from;
         this.to = to;
     }
 
+    /**
+     * Method for creating event.
+     * @param input Input.
+     * @param ui Ui.
+     * @return Event Event.
+     */
     public static Event createEvent(String input, Ui ui) {
         try {
             if (!input.contains(" /from ") || !input.contains(" /to ")) {
@@ -66,6 +89,10 @@ public class Event extends Task {
         }
     }
 
+    /**
+     * Method for creating a string when data is saved.
+     * @return String
+     */
     @Override
     public String saveData() {
         if (fromDate != null && toDate != null) {
@@ -75,6 +102,10 @@ public class Event extends Task {
         }
     }
 
+    /**
+     * Method for event toString implementation.
+     * @return String
+     */
     @Override
     public String toString() {
         if (fromDate != null && toDate != null) {
