@@ -6,20 +6,43 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Represents the class for the task deadline.
+ * Contains methods to create deadline as well as relevant methods required for deadline.
+ */
 public class Deadline extends Task {
     protected LocalDateTime byDate;
     protected String date;
 
+    /**
+     * Constructor for the deadline class with LocalDateTime as the date and time type.
+     *
+     * @param description Description of deadline.
+     * @param byDate Due date and time of description in LocalDateTime object type.
+     */
     public Deadline(String description, LocalDateTime byDate) {
         super(description);
         this.byDate = byDate;
     }
 
+    /**
+     * Constructor for the deadline class with String as the date and time type.
+     *
+     * @param description Description of deadline.
+     * @param byDate Due date and time of description in String object type.
+     */
     public Deadline(String description, String byDate) {
         super(description);
         this.date = byDate;
     }
 
+    /**
+     * Method for creating deadline task and to check for errors and formatting issues.
+     *
+     * @param input Input.
+     * @param ui Ui.
+     * @return Deadline Deadline.
+     */
     public static Deadline createDeadline(String input, Ui ui) {
         try {
             if (!input.contains(" /by ")) {
@@ -50,6 +73,11 @@ public class Deadline extends Task {
         }
     }
 
+    /**
+     * Method for creating a string when data is saved.
+     *
+     * @return String.
+     */
     @Override
     public String saveData() {
         if (byDate != null) {
@@ -59,6 +87,11 @@ public class Deadline extends Task {
         }
     }
 
+    /**
+     * Method for deadline toString implementation.
+     *
+     * @return String.
+     */
     @Override
     public String toString() {
         if (byDate != null) {

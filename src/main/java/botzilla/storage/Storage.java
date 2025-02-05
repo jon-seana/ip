@@ -15,6 +15,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Represents the class for loading and saving tasks set by user.
+ * Also checks whether the output file exists, else it will create a file for it.
+ */
 public class Storage {
     private static final String FILE_PATH = "src/main/tasks.txt";
     private static final ArrayList<Task> tasks = new ArrayList<>();
@@ -31,6 +35,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads task from the tasks.txt file which is saved in the hard disk of the computer.
+     *
+     * @return ArrayList<Task> Array of tasks stored in an arraylist.
+     * @throws BotzillaException Custom exception created for botzilla class.
+     */
     public ArrayList<Task> loadTask() throws BotzillaException {
         ensureFileExists();
         try {
@@ -74,6 +84,12 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves tasks when it is taken in as a parameter.
+     * Task will be saved to the computer's local hard disk.
+     *
+     * @param tasks Tasks.
+     */
     public void saveTask(TaskList tasks) {
         ArrayList<Task> taskList = tasks.getTasks();
         try {
