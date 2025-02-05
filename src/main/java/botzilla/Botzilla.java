@@ -43,7 +43,8 @@ public class Botzilla {
 
     /**
      * The main method for entry into the botzilla chatbot.
-     * @param args
+     *
+     * @param args Arguments to be input by user.
      */
     public static void main(String[] args) {
         new Botzilla().run();

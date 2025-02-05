@@ -23,6 +23,7 @@ public class TaskList {
 
     /**
      * Method for assigning this.tasks to the tasks input parameter.
+     *
      * @param tasks Tasks.
      */
     public TaskList(ArrayList<Task> tasks) {
@@ -31,6 +32,7 @@ public class TaskList {
 
     /**
      * Method to return the current number of tasks registered.
+     *
      * @return int Number of task.
      */
     public int size() {
@@ -39,6 +41,7 @@ public class TaskList {
 
     /**
      * Method to add task into the arrayList.
+     *
      * @param task Task.
      */
     public void addTask(Task task) {
@@ -47,6 +50,7 @@ public class TaskList {
 
     /**
      * Method to get arrayList.
+     *
      * @return ArrayList<Task> List of tasks.
      */
     public ArrayList<Task> getTasks() {
@@ -55,6 +59,7 @@ public class TaskList {
 
     /**
      * Method to mark a task done.
+     *
      * @param index Task number to be marked done.
      * @throws BotzillaException Custom type of exception thrown.
      */
@@ -67,6 +72,7 @@ public class TaskList {
 
     /**
      * Method to mark a task as undone.
+     *
      * @param index Task number to be marked undone.
      * @throws BotzillaException Custom type of exception thrown.
      */
@@ -79,6 +85,7 @@ public class TaskList {
 
     /**
      * Method to delete task.
+     *
      * @param input Command input containing the task number to be deleted.
      * @param ui Ui.
      * @return String.
@@ -97,6 +104,7 @@ public class TaskList {
 
     /**
      * Method to check if the taskList is empty.
+     *
      * @return boolean.
      */
     public boolean isEmpty() {

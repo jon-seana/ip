@@ -16,6 +16,7 @@ public class Deadline extends Task {
 
     /**
      * Constructor for the deadline class with LocalDateTime as the date and time type.
+     *
      * @param description Description of deadline.
      * @param byDate Due date and time of description in LocalDateTime object type.
      */
@@ -26,6 +27,7 @@ public class Deadline extends Task {
 
     /**
      * Constructor for the deadline class with String as the date and time type.
+     *
      * @param description Description of deadline.
      * @param byDate Due date and time of description in String object type.
      */
@@ -36,6 +38,7 @@ public class Deadline extends Task {
 
     /**
      * Method for creating deadline task and to check for errors and formatting issues.
+     *
      * @param input Input.
      * @param ui Ui.
      * @return Deadline Deadline.
@@ -72,7 +75,8 @@ public class Deadline extends Task {
 
     /**
      * Method for creating a string when data is saved.
-     * @return String
+     *
+     * @return String.
      */
     @Override
     public String saveData() {
@@ -85,7 +89,8 @@ public class Deadline extends Task {
 
     /**
      * Method for deadline toString implementation.
-     * @return String
+     *
+     * @return String.
      */
     @Override
     public String toString() {

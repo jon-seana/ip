@@ -16,9 +16,9 @@ public class Todo extends Task {
      * The input should start with "todo" followed by a description.
      * If the description is missing or empty, the corresponding UI error message is shown.
      *
-     * @param input the full user input string
-     * @param ui the UI instance used to display error messages
-     * @return a new Todo task if the description is valid; otherwise, returns null
+     * @param input the full user input string.
+     * @param ui the UI instance used to display error messages.
+     * @return a new Todo task if the description is valid; otherwise, returns null.
      */
     public static Todo createTodo(String input, Ui ui) {
         try {
@@ -36,7 +36,8 @@ public class Todo extends Task {
 
     /**
      * Method for creating a string when data is saved.
-     * @return String
+     *
+     * @return String.
      */
     @Override
     public String saveData() {
@@ -45,7 +46,8 @@ public class Todo extends Task {
 
     /**
      * Method for todo toString implementation.
-     * @return String
+     *
+     * @return String.
      */
     @Override
     public String toString() {

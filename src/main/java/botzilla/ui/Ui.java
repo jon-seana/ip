@@ -25,6 +25,7 @@ public class Ui {
 
     /**
      * Method to read the next line of input from user.
+     *
      * @return String.
      */
     public String readLine() {
@@ -114,6 +115,7 @@ public class Ui {
 
     /**
      * Method to print out the custom warning message.
+     *
      * @param errorMessage Error message to be printed to user.
      */
     public void showErrorMessage(String errorMessage) {
@@ -131,6 +133,7 @@ public class Ui {
 
     /**
      * Method to print out the message after executing a task input from user.
+     *
      * @param taskList Tasklist.
      * @param task Task.
      */

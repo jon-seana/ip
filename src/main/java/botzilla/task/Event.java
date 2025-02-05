@@ -18,6 +18,7 @@ public class Event extends Task {
 
     /**
      * Constructor for event class with LocalDateTime as the date and time type.
+     *
      * @param description Description of event.
      * @param from start date and time of event in LocalDateTime object type.
      * @param to end date and time of event in LocalDateTime object type.
@@ -30,6 +31,7 @@ public class Event extends Task {
 
     /**
      * Constructor for event class with String as the date and time type.
+     *
      * @param description Description of event.
      * @param from start date and time of event in String object type.
      * @param to end date and time of event in String object type.
@@ -42,6 +44,7 @@ public class Event extends Task {
 
     /**
      * Method for creating event.
+     *
      * @param input Input.
      * @param ui Ui.
      * @return Event Event.
@@ -91,7 +94,8 @@ public class Event extends Task {
 
     /**
      * Method for creating a string when data is saved.
-     * @return String
+     *
+     * @return String.
      */
     @Override
     public String saveData() {
@@ -104,7 +108,8 @@ public class Event extends Task {
 
     /**
      * Method for event toString implementation.
-     * @return String
+     *
+     * @return String.
      */
     @Override
     public String toString() {

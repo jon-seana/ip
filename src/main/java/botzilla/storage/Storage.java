@@ -37,6 +37,7 @@ public class Storage {
 
     /**
      * Loads task from the tasks.txt file which is saved in the hard disk of the computer.
+     *
      * @return ArrayList<Task> Array of tasks stored in an arraylist.
      * @throws BotzillaException Custom exception created for botzilla class.
      */
@@ -86,6 +87,7 @@ public class Storage {
     /**
      * Saves tasks when it is taken in as a parameter.
      * Task will be saved to the computer's local hard disk.
+     *
      * @param tasks Tasks.
      */
     public void saveTask(TaskList tasks) {

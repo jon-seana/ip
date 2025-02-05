@@ -9,6 +9,7 @@ public class Task {
 
     /**
      * The constructor for task class.
+     *
      * @param description Type of task to be done.
      */
     public Task(String description) {
@@ -18,7 +19,8 @@ public class Task {
 
     /**
      * Method to get status icon "X" or " ", which is a blank.
-     * @return String
+     *
+     * @return String.
      */
     public String getStatusIcon() {
         return  (isDone ? "X" : " ");
@@ -40,7 +42,8 @@ public class Task {
 
     /**
      * Method for creating a string when data is saved.
-     * @return String
+     *
+     * @return String.
      */
     public String saveData() {
         return description;
@@ -48,7 +51,8 @@ public class Task {
 
     /**
      * Method for task toString implementation.
-     * @return String
+     *
+     * @return String.
      */
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
