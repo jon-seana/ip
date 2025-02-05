@@ -37,7 +37,7 @@ public class Ui {
      */
     public void showGreeting() {
         System.out.println(horizontalLine);
-        System.out.println("\t Hello! I'm botzilla.Botzilla");
+        System.out.println("\t Hello! I'm Botzilla.");
         System.out.println("\t What can I do for you?");
         System.out.println(endFormat);
     }
@@ -142,7 +142,7 @@ public class Ui {
         storage.saveTask(taskList);
         System.out.println(horizontalLine);
         System.out.println(taskFirstLine);
-        System.out.println("\t   " + taskList.getTasks().get(taskList.size() - 1).toString());
+        System.out.println("\t   " + taskList.getTask().get(taskList.size() - 1).toString());
         System.out.println("\t Now you have " + taskList.size() + " tasks in the list.");
         System.out.println(endFormat);
     }
