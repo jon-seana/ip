@@ -81,4 +81,35 @@ public class TaskList {
             System.out.println(TaskList.endFormat);
         }
     }
+
+    /**
+     * Method to find a task from a keyword command input from user.
+     *
+     * @param keyword Command to be typed in by user.
+     * @param ui Ui.
+     */
+    public void findTask(String keyword, Ui ui) {
+        ArrayList<Task> resultOfSearch = new ArrayList<>();
+
+        for (Task task : tasks) {
+            if (task.toString().contains(keyword)) {
+                resultOfSearch.add(task);
+            }
+        }
+
+        if (resultOfSearch.isEmpty()) {
+            ui.findTaskError();
+        } else {
+            System.out.println(TaskList.horizontalLine);
+            System.out.println("\t Here are the matching tasks in your list:");
+            int lengthOfList = resultOfSearch.size();
+            for (int i = 0; i < lengthOfList; i++) {
+                if (resultOfSearch.get(i) != null) {
+                    int b = i + 1;
+                    System.out.println("\t " + b + "." + resultOfSearch.get(i).toString());
+                }
+            }
+            System.out.println(TaskList.endFormat);
+        }
+    }
 }

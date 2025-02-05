@@ -1,5 +1,7 @@
-[D][ ] make pizza (by: May 2 2025, 4:00 pm)
+[D][X] make pizza (by: May 2 2025, 4:00 pm)
 [T][ ] grill fish
 [T][X] make prata
 [D][ ] wash clothes (by: Feb 5 2025, 9:30 pm)
-[E][X] meeting with james (from: Feb 5 2025, 3:30 pm to: Feb 5 2025, 4:00 pm)
+[E][ ] meeting with james (from: Feb 5 2025, 3:30 pm to: Feb 5 2025, 4:00 pm)
+[T][ ] boil fish
+[T][X] return james his book
