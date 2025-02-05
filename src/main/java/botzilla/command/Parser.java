@@ -8,21 +8,30 @@ import botzilla.task.Deadline;
 import botzilla.task.Event;
 import botzilla.exception.BotzillaException;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
+/**
+ *
+ */
 public class Parser {
     private final TaskList taskList;
     private final Storage storage;
     private final Ui ui;
 
+    /**
+     *
+     * @param taskList
+     * @param storage
+     * @param ui
+     */
     public Parser(TaskList taskList, Storage storage, Ui ui) {
         this.taskList = taskList;
         this.storage = storage;
         this.ui = ui;
     }
 
+    /**
+     *
+     * @param input
+     */
     public void parse(String input) {
         String taskFirstLine = "\t Got it. I've added this task:";
         String horizontalLine = "\t_____________________________________________________________________";
@@ -58,101 +67,29 @@ public class Parser {
                 System.out.println("\t   " + taskList.getTasks().get(index - 1).toString());
                 System.out.println(endFormat);
             } else if (input.startsWith("todo")) {
-                try {
-                    if (input.substring(5).trim().isEmpty()) {
-                        ui.toDoIncomplete();
-                    } else {
-                        taskList.addTask(new Todo(input.substring(5)));
-                        storage.saveTask(taskList);
-                    }
-                } catch (IndexOutOfBoundsException e) {
-                    ui.toDoError();
+                Todo createToDo = Todo.createTodo(input, ui);
+                if (createToDo == null) {
                     return;
                 }
-                System.out.println(horizontalLine);
-                System.out.println(taskFirstLine);
-                System.out.println("\t   " + taskList.getTasks().get(taskList.size() - 1).toString());
-                System.out.println("\t Now you have " + taskList.size() + " tasks in the list.");
-                System.out.println(endFormat);
+                ui.printOut(taskList, createToDo);
             } else if (input.startsWith("deadline")) {
-                try {
-                    String[] deadlineInput = input.split(" /by ");
-                    String description = deadlineInput[0].substring(9).trim();
-                    String date = deadlineInput[1].trim();
-                    LocalDateTime byDate;
-
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
-                    DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-d HHmm");
-
-                    if (date.contains("/")) {
-                        byDate = LocalDateTime.parse(date, formatter);
-                    } else if (date.contains("-")) {
-                        byDate = LocalDateTime.parse(date, formatter2);
-                    } else {
-                        throw new DateTimeParseException("Invalid date format", date, 0);
-                    }
-
-                    taskList.addTask(new Deadline(description, byDate));
-                    storage.saveTask(taskList);
-                } catch (IndexOutOfBoundsException | DateTimeParseException e) {
-                    ui.deadLineParse();
+                Deadline createDeadline = Deadline.createDeadline(input, ui);
+                if (createDeadline == null) {
                     return;
                 }
-                System.out.println(horizontalLine);
-                System.out.println(taskFirstLine);
-                System.out.println("\t   " + taskList.getTasks().get(taskList.size() - 1).toString());
-                System.out.println("\t Now you have " + taskList.size() + " tasks in the list.");
-                System.out.println(endFormat);
+                ui.printOut(taskList, createDeadline);
             } else if (input.startsWith("event")) {
-                try {
-                    String[] eventInput = input.split(" /from ");
-                    String description = eventInput[0].substring(6);
-                    String from = (eventInput[1].split(" /to "))[0].trim();
-                    String to = (eventInput[1].split(" /to "))[1].trim();
-                    LocalDateTime fromDate;
-                    LocalDateTime toDate;
-
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
-                    DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-d HHmm");
-
-                    if (from.contains("/")) {
-                        fromDate = LocalDateTime.parse(from, formatter);
-                    } else if (from.contains("-")) {
-                        fromDate = LocalDateTime.parse(from, formatter2);
-                    } else {
-                        throw new DateTimeParseException("Invalid date format", from, 0);
-                    }
-
-                    if (to.contains("/")) {
-                        toDate = LocalDateTime.parse(to, formatter);
-                    } else if (to.contains("-")) {
-                        toDate = LocalDateTime.parse(to, formatter2);
-                    } else {
-                        throw new DateTimeParseException("Invalid date format", to, 0);
-                    }
-
-                    taskList.addTask(new Event(description, fromDate, toDate));
-                    storage.saveTask(taskList);
-                } catch (IndexOutOfBoundsException | DateTimeParseException e) {
-                    ui.eventParse();
+                Event createEvent = Event.createEvent(input, ui);
+                if (createEvent == null) {
                     return;
                 }
-                System.out.println(horizontalLine);
-                System.out.println(taskFirstLine);
-                System.out.println("\t   " + taskList.getTasks().get(taskList.size() - 1).toString());
-                System.out.println("\t Now you have " + taskList.size() + " tasks in the list.");
-                System.out.println(endFormat);
+                ui.printOut(taskList, createEvent);
             } else if (input.startsWith("delete")) {
-                String deleted;
-                try {
-                    int index = Integer.parseInt(input.split(" ")[1]);
-                    deleted = taskList.getTasks().get(index - 1).toString();
-                    taskList.deleteTask(index - 1);
-                    storage.saveTask(taskList);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    ui.deleteError();
+                String deleted = taskList.deleteTask(input, ui);
+                if (deleted == null) {
                     return;
                 }
+                storage.saveTask(taskList);
                 System.out.println(horizontalLine);
                 System.out.println("\t Noted. I've removed this task:");
                 System.out.println("\t   " + deleted);

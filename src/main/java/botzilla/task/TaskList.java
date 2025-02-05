@@ -27,10 +27,6 @@ public class TaskList {
         tasks.add(task);
     }
 
-    public void deleteTask(int index) {
-        tasks.remove(index);
-    }
-
     public ArrayList<Task> getTasks() {
         return tasks;
     }
@@ -47,6 +43,18 @@ public class TaskList {
             throw new BotzillaException(horizontalLine + "\n" + "\t Error!! Please enter a valid task number you want to mark as undone." + "\n" + endFormat);
         }
         tasks.get(index).markAsUndone();
+    }
+
+    public String deleteTask(String input, Ui ui) {
+        try {
+            int index = Integer.parseInt(input.split(" ")[1]);
+            String deleted = tasks.get(index - 1).toString();
+            tasks.remove(index - 1);
+            return deleted;
+        } catch (NumberFormatException | IndexOutOfBoundsException error) {
+            ui.deleteError();
+            return null;
+        }
     }
 
     public boolean isEmpty() {

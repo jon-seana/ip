@@ -1,7 +1,10 @@
 package botzilla.task;
 
+import botzilla.ui.Ui;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Event extends Task {
     protected String from;
@@ -18,6 +21,49 @@ public class Event extends Task {
         super(description);
         this.from = from;
         this.to = to;
+    }
+
+    public static Event createEvent(String input, Ui ui) {
+        try {
+            if (!input.contains(" /from ") || !input.contains(" /to ")) {
+                ui.eventParse();
+                return null;
+            }
+            String[] eventInput = input.split(" /from ");
+            String description = eventInput[0].substring(6).trim();
+            if (description.isEmpty()) {
+                ui.eventParse();
+                return null;
+            }
+            String from = (eventInput[1].split(" /to "))[0].trim();
+            String to = (eventInput[1].split(" /to "))[1].trim();
+            if (from.isEmpty() || to.isEmpty()) {
+                ui.eventParse();
+                return null;
+            }
+            LocalDateTime fromDate;
+            LocalDateTime toDate;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+            DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-d HHmm");
+            if (from.contains("/")) {
+                fromDate = LocalDateTime.parse(from, formatter);
+            } else if (from.contains("-")) {
+                fromDate = LocalDateTime.parse(from, formatter2);
+            } else {
+                throw new DateTimeParseException("Invalid date format: " + from, from, 0);
+            }
+            if (to.contains("/")) {
+                toDate = LocalDateTime.parse(to, formatter);
+            } else if (to.contains("-")) {
+                toDate = LocalDateTime.parse(to, formatter2);
+            } else {
+                throw new DateTimeParseException("Invalid date format: " + to, to, 0);
+            }
+            return new Event(description, fromDate, toDate);
+        } catch (IndexOutOfBoundsException | DateTimeParseException error) {
+            ui.eventParse();
+            return null;
+        }
     }
 
     @Override

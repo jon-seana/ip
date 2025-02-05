@@ -1,11 +1,17 @@
 package botzilla.ui;
 
+import botzilla.task.TaskList;
+import botzilla.task.Task;
+import botzilla.storage.Storage;
+
 import java.util.Scanner;
 
 public class Ui {
+    private static final String taskFirstLine = "\t Got it. I've added this task:";
     private static final String horizontalLine = "\t_____________________________________________________________________";
     private static final String endFormat = horizontalLine + "\n" + " ";
     private final Scanner scanner;
+    private final Storage storage = new Storage();
 
     public Ui() {
         scanner = new Scanner(System.in);
@@ -76,6 +82,16 @@ public class Ui {
     public void dontUnderstand() {
         System.out.println(horizontalLine);
         System.out.println("\t Hey! I don't understand what you want me to do :(");
+        System.out.println(endFormat);
+    }
+
+    public void printOut(TaskList taskList, Task task) {
+        taskList.addTask(task);
+        storage.saveTask(taskList);
+        System.out.println(horizontalLine);
+        System.out.println(taskFirstLine);
+        System.out.println("\t   " + taskList.getTasks().get(taskList.size() - 1).toString());
+        System.out.println("\t Now you have " + taskList.size() + " tasks in the list.");
         System.out.println(endFormat);
     }
 }
