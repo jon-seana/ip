@@ -53,7 +53,7 @@ public class TaskList {
      *
      * @return ArrayList<Task> List of tasks.
      */
-    public ArrayList<Task> getTasks() {
+    public ArrayList<Task> getTask() {
         return tasks;
     }
 
@@ -114,7 +114,7 @@ public class TaskList {
     /**
      * Method to invoke the test(ArrayList<Task> tasks) method.
      */
-    public void listTasks() {
+    public void listTask() {
         test(tasks);
     }
 

@@ -1,8 +1,6 @@
 package botzilla.task;
 
 import botzilla.ui.Ui;
-import botzilla.task.Task;
-import botzilla.task.TaskList;
 
 /**
  * Represents the class for todo task.

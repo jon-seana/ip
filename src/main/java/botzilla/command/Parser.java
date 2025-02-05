@@ -31,12 +31,11 @@ public class Parser {
     }
 
     /**
-     *  Choose a variety of actions depending on the String input.
+     * Choose a variety of actions depending on the String input.
      *
      * @param input Input command.
      */
     public void parse(String input) {
-        String taskFirstLine = "\t Got it. I've added this task:";
         String horizontalLine = "\t_____________________________________________________________________";
         String endFormat = horizontalLine + "\n" + " ";
         try {
