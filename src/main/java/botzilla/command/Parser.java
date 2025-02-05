@@ -98,6 +98,14 @@ public class Parser {
                 System.out.println("\t   " + deleted);
                 System.out.println("\t Now you have " + taskList.size() + " tasks in the list.");
                 System.out.println(endFormat);
+            } else if (input.startsWith("find")) {
+                if (input.length() <= 5) {
+                    throw new BotzillaException(horizontalLine + "\n"
+                                                        + "\t Find command requires this format:" + "\n"
+                                                        + "\t find <keyword(s)>" + "\n" + endFormat);
+                }
+                String keyword = input.substring(4);
+                taskList.findTask(keyword, ui);
             } else {
                 ui.dontUnderstand();
             }

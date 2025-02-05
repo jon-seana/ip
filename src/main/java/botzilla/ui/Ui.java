@@ -146,4 +146,13 @@ public class Ui {
         System.out.println("\t Now you have " + taskList.size() + " tasks in the list.");
         System.out.println(endFormat);
     }
+
+    /**
+     * Method to print out find task warning message.
+     */
+    public void findTaskError() {
+        System.out.println(horizontalLine);
+        System.out.println("\t No matching task found!");
+        System.out.println(endFormat);
+    }
 }
