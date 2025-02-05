@@ -19,7 +19,7 @@ public class Storage {
     private static final String FILE_PATH = "src/main/tasks.txt";
     private static final ArrayList<Task> tasks = new ArrayList<>();
 
-    private static void ensureFileExists() {
+    private static void ensureFileExist() {
         File file = new File(Storage.FILE_PATH);
         try {
             if (!file.exists()) {
@@ -32,7 +32,7 @@ public class Storage {
     }
 
     public ArrayList<Task> loadTask() throws BotzillaException {
-        ensureFileExists();
+        ensureFileExist();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH));
             String line;
@@ -75,7 +75,7 @@ public class Storage {
     }
 
     public void saveTask(TaskList tasks) {
-        ArrayList<Task> taskList = tasks.getTasks();
+        ArrayList<Task> taskList = tasks.getTask();
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH));
             for (Task task : taskList) {

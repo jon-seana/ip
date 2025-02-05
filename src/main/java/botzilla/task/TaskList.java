@@ -27,7 +27,7 @@ public class TaskList {
         tasks.add(task);
     }
 
-    public ArrayList<Task> getTasks() {
+    public ArrayList<Task> getTask() {
         return tasks;
     }
 
@@ -61,7 +61,7 @@ public class TaskList {
         return tasks.isEmpty();
     }
 
-    public void listTasks() {
+    public void listTask() {
         test(tasks);
     }
 

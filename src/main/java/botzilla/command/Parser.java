@@ -38,7 +38,7 @@ public class Parser {
         String endFormat = horizontalLine + "\n" + " ";
         try {
             if (input.trim().equals("list")) {
-                taskList.listTasks();
+                taskList.listTask();
             } else if (input.trim().equals("bye")) {
                 ui.sayGoodBye();
                 System.exit(0);
@@ -52,7 +52,7 @@ public class Parser {
                 }
                 System.out.println(horizontalLine);
                 System.out.println("\t Nice! I've marked this task as done:");
-                System.out.println("\t   " + taskList.getTasks().get(index - 1).toString());
+                System.out.println("\t   " + taskList.getTask().get(index - 1).toString());
                 System.out.println(endFormat);
             } else if (input.startsWith("unmark")) {
                 int index = Integer.parseInt(input.split(" ")[1]);
@@ -64,7 +64,7 @@ public class Parser {
                 }
                 System.out.println(horizontalLine);
                 System.out.println("\t OK, I've marked this task as not done yet:");
-                System.out.println("\t   " + taskList.getTasks().get(index - 1).toString());
+                System.out.println("\t   " + taskList.getTask().get(index - 1).toString());
                 System.out.println(endFormat);
             } else if (input.startsWith("todo")) {
                 Todo createToDo = Todo.createTodo(input, ui);
