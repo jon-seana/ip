@@ -1,18 +1,18 @@
 package botzilla.task;
-
-import botzilla.ui.Ui;
-import botzilla.exception.BotzillaException;
-
 import java.util.ArrayList;
+
+import botzilla.exception.BotzillaException;
+import botzilla.ui.Ui;
 
 /**
  * Represents a class for common task related commands.
  */
 public class TaskList {
-    private final ArrayList<Task> tasks;
-    private static final Ui ui = new Ui();
-    private static final String horizontalLine = "\t_____________________________________________________________________";
+    private static final String horizontalLine =
+            "\t_____________________________________________________________________";
     private static final String endFormat = horizontalLine + "\n" + " ";
+    private static final Ui ui = new Ui();
+    private final ArrayList<Task> tasks;
 
     /**
      * Method for assigning an arraylist.
@@ -51,7 +51,7 @@ public class TaskList {
     /**
      * Method to get arrayList.
      *
-     * @return ArrayList<Task> List of tasks.
+     * @return ArrayList (Type: Task) List of tasks.
      */
     public ArrayList<Task> getTask() {
         return tasks;
@@ -65,7 +65,9 @@ public class TaskList {
      */
     public void markDone(int index) throws BotzillaException {
         if (index < 0 || index >= tasks.size()) {
-            throw new BotzillaException(horizontalLine + "\n" + "\t Error!! Please enter a valid task number you want to mark as done." + "\n" + endFormat);
+            throw new BotzillaException(horizontalLine + "\n"
+                                               + "\t Error!! Please enter a valid task number you want to mark as done."
+                                               + "\n" + endFormat);
         }
         tasks.get(index).markAsDone();
     }
@@ -78,7 +80,9 @@ public class TaskList {
      */
     public void markUndone(int index) throws BotzillaException {
         if (index < 0 || index >= tasks.size()) {
-            throw new BotzillaException(horizontalLine + "\n" + "\t Error!! Please enter a valid task number you want to mark as undone." + "\n" + endFormat);
+            throw new BotzillaException(horizontalLine + "\n"
+                                             + "\t Error!! Please enter a valid task number you want to mark as undone."
+                                             + "\n" + endFormat);
         }
         tasks.get(index).markAsUndone();
     }
@@ -112,14 +116,14 @@ public class TaskList {
     }
 
     /**
-     * Method to invoke the test(ArrayList<Task> tasks) method.
+     * Method to invoke the test(ArrayList (Type: Task) tasks) method.
      */
     public void listTask() {
         test(tasks);
     }
 
     private static void test(ArrayList<Task> tasks) {
-        if(tasks.isEmpty()) {
+        if (tasks.isEmpty()) {
             TaskList.ui.listEmpty();
         } else {
             System.out.println(TaskList.horizontalLine);

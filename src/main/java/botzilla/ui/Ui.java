@@ -1,17 +1,17 @@
 package botzilla.ui;
-
-import botzilla.task.TaskList;
-import botzilla.task.Task;
-import botzilla.storage.Storage;
-
 import java.util.Scanner;
+
+import botzilla.storage.Storage;
+import botzilla.task.Task;
+import botzilla.task.TaskList;
 
 /**
  * Represents the class Ui for the replies given to users.
  */
 public class Ui {
     private static final String taskFirstLine = "\t Got it. I've added this task:";
-    private static final String horizontalLine = "\t_____________________________________________________________________";
+    private static final String horizontalLine =
+            "\t_____________________________________________________________________";
     private static final String endFormat = horizontalLine + "\n" + " ";
     private final Scanner scanner;
     private final Storage storage = new Storage();
@@ -64,7 +64,9 @@ public class Ui {
      * Method to print out the mark and unmark of empty list warning message.
      */
     public void markUnmarkEmptyList() {
-        System.out.println(horizontalLine + "\n" + "\t Error!! You have no tasks in your list, please add a task first and try again." + "\n" + endFormat);
+        System.out.println(horizontalLine + "\n"
+                                   + "\t Error!! You have no tasks in your list, please add a task first and try again."
+                                   + "\n" + endFormat);
     }
 
     /**
@@ -109,7 +111,8 @@ public class Ui {
      */
     public void eventParse() {
         System.out.println(horizontalLine);
-        System.out.println("\t Hi there! Please follow the format: event task /from d/mm/yyyy HHmm /to d/mm/yyyy HHmm.");
+        System.out.println(
+                "\t Hi there! Please follow the format: event task /from d/mm/yyyy HHmm /to d/mm/yyyy HHmm.");
         System.out.println(endFormat);
     }
 

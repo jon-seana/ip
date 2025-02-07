@@ -1,12 +1,4 @@
 package botzilla.storage;
-
-import botzilla.task.Task;
-import botzilla.task.TaskList;
-import botzilla.exception.BotzillaException;
-import botzilla.task.Todo;
-import botzilla.task.Deadline;
-import botzilla.task.Event;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,6 +6,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import botzilla.exception.BotzillaException;
+import botzilla.task.Deadline;
+import botzilla.task.Event;
+import botzilla.task.Task;
+import botzilla.task.TaskList;
+import botzilla.task.Todo;
 
 /**
  * Represents the class for loading and saving tasks set by user.
@@ -38,7 +37,7 @@ public class Storage {
     /**
      * Loads task from the tasks.txt file which is saved in the hard disk of the computer.
      *
-     * @return ArrayList<Task> Array of tasks stored in an arraylist.
+     * @return ArrayList (Type: Task) Array of tasks stored in an arraylist.
      * @throws BotzillaException Custom exception created for botzilla class.
      */
     public ArrayList<Task> loadTask() throws BotzillaException {

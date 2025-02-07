@@ -1,12 +1,11 @@
 package botzilla.command;
-
+import botzilla.exception.BotzillaException;
 import botzilla.storage.Storage;
-import botzilla.task.TaskList;
-import botzilla.ui.Ui;
-import botzilla.task.Todo;
 import botzilla.task.Deadline;
 import botzilla.task.Event;
-import botzilla.exception.BotzillaException;
+import botzilla.task.TaskList;
+import botzilla.task.Todo;
+import botzilla.ui.Ui;
 
 /**
  * Represents a class for the Parser constructor and parse method which takes in a String input and
