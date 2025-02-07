@@ -1,10 +1,9 @@
 package botzilla.task;
-
-import botzilla.ui.Ui;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
+import botzilla.ui.Ui;
 
 /**
  * Represents the class for the task deadline.
@@ -81,7 +80,8 @@ public class Deadline extends Task {
     @Override
     public String saveData() {
         if (byDate != null) {
-            return "[D]" + super.toString() + " (by: " + byDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) + ")";
+            return "[D]" + super.toString()
+                    + " (by: " + byDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) + ")";
         } else {
             return "[D]" + super.toString() + " (by: " + date + ")";
         }
@@ -95,7 +95,8 @@ public class Deadline extends Task {
     @Override
     public String toString() {
         if (byDate != null) {
-            return "[D]" + super.toString() + " (by: " + byDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) + ")";
+            return "[D]" + super.toString()
+                    + " (by: " + byDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) + ")";
         } else {
             return "[D]" + super.toString() + " (by: " + date + ")";
         }

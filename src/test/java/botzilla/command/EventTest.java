@@ -1,13 +1,14 @@
 package botzilla.command;
-
-import botzilla.task.Event;
-import botzilla.ui.Ui;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+import botzilla.task.Event;
+import botzilla.ui.Ui;
 
 public class EventTest {
     @Test

@@ -1,12 +1,14 @@
 package botzilla.command;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import org.junit.jupiter.api.Test;
 
 import botzilla.task.Deadline;
 import botzilla.ui.Ui;
-import org.junit.jupiter.api.Test;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class DeadlineTest {
     /**
@@ -20,7 +22,8 @@ public class DeadlineTest {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
         LocalDateTime expectedDateTime = LocalDateTime.parse("05/02/2025 1500", formatter);
         Deadline expected = new Deadline("meeting bob", expectedDateTime);
-        assertEquals(expected.toString(), deadline.toString(), "The created Deadline does not match the expected value.");
+        assertEquals(expected.toString(), deadline.toString(),
+                     "The created Deadline does not match the expected value.");
     }
 
     /**
@@ -34,7 +37,8 @@ public class DeadlineTest {
         DateTimeFormatter formatterDash = DateTimeFormatter.ofPattern("yyyy-MM-d HHmm");
         LocalDateTime expectedDateTime = LocalDateTime.parse("2025-02-5 1500", formatterDash);
         Deadline expected = new Deadline("meeting bob", expectedDateTime);
-        assertEquals(expected.toString(), deadline.toString(), "The created Deadline (dash format) does not match the expected value.");
+        assertEquals(expected.toString(), deadline.toString(),
+                     "The created Deadline (dash format) does not match the expected value.");
     }
 
     /**

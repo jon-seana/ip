@@ -23,7 +23,7 @@ public class Task {
      * @return String.
      */
     public String getStatusIcon() {
-        return  (isDone ? "X" : " ");
+        return (isDone ? "X" : " ");
     }
 
     /**
