@@ -29,6 +29,95 @@ public class Parser {
         this.ui = ui;
     }
 
+    public String parseString(String input) {
+        String horizontalLine = "\t_____________________________________________________________________";
+        String endFormat = horizontalLine + "\n" + " ";
+        StringBuilder output = new StringBuilder();
+        try {
+            if (input.trim().equals("list")) {
+                output.append(taskList.getTaskListString());
+            } else if (input.trim().equals("bye")) {
+                output.append(ui.sayGoodByeString());
+            } else if (input.startsWith("mark")) {
+                int index = Integer.parseInt(input.split(" ")[1]);
+                if (taskList.isEmpty()) {
+                    output.append(ui.markUnmarkEmptyListString());
+                } else {
+                    taskList.markDone(index - 1);
+                    storage.saveTask(taskList);
+                    output.append("\t Nice! I've marked this task as done:")
+                            .append("\n")
+                            .append("\t   ")
+                            .append(taskList.getTask().get(index - 1).toString());
+                }
+            } else if (input.startsWith("unmark")) {
+                int index = Integer.parseInt(input.split(" ")[1]);
+                if (taskList.isEmpty()) {
+                    output.append(ui.markUnmarkEmptyListString());
+                } else {
+                    taskList.markUndone(index - 1);
+                    storage.saveTask(taskList);
+                    output.append("\t OK, I've marked this task as not done yet:")
+                            .append("\n")
+                            .append("\t   ")
+                            .append(taskList.getTask().get(index - 1).toString());
+                }
+            } else if (input.startsWith("todo")) {
+                Todo createTodo = Todo.createTodo(input, ui);
+                if (createTodo == null) {
+                    return "\t Hi there! Please add a description for a todo task.";
+                }
+                taskList.addTask(createTodo);
+                storage.saveTask(taskList);
+                output.append(ui.getPrintOutString(taskList, createTodo));
+            } else if (input.startsWith("deadline")) {
+                Deadline createDeadline = Deadline.createDeadline(input, ui);
+                if (createDeadline == null) {
+                    return "\t Hi there! Please follow the format: deadline task /by d/mm/yyyy HHmm.";
+                }
+                taskList.addTask(createDeadline);
+                storage.saveTask(taskList);
+                output.append(ui.getPrintOutString(taskList, createDeadline));
+            } else if (input.startsWith("event")) {
+                Event createEvent = Event.createEvent(input, ui);
+                if (createEvent == null) {
+                    return "\t Hi there! Please follow the format: event task /from d/mm/yyyy HHmm /to d/mm/yyyy HHmm.";
+                }
+                taskList.addTask(createEvent);
+                storage.saveTask(taskList);
+                output.append(ui.getPrintOutString(taskList, createEvent));
+            } else if (input.startsWith("delete")) {
+                String deleted = taskList.deleteTask(input, ui);
+                if (deleted == null) {
+                    return "\t Hi there! Please enter a valid task number you want to delete." + "\n"
+                            + "\t The task number you provided may have been removed or may not exist at all.";
+                }
+                storage.saveTask(taskList);
+                output.append("\t Noted. I've removed this task:")
+                        .append("\n")
+                        .append("\t   ")
+                        .append(deleted)
+                        .append("\n")
+                        .append("\t Now you have ")
+                        .append(taskList.size())
+                        .append(" tasks in the list.");
+            } else if (input.startsWith("find")) {
+                if (input.length() <= 5) {
+                    throw new BotzillaException(horizontalLine + "\n"
+                                                        + "\t Find command requires this format:" + "\n"
+                                                        + "\t find <keyword(s)>" + "\n" + endFormat);
+                }
+                String keyword = input.substring(4);
+                output.append(taskList.findTaskString(keyword));
+            } else {
+                output.append(ui.dontUnderstandString());
+            }
+        } catch (BotzillaException error) {
+            output.append(error.getMessage());
+        }
+        return output.toString();
+    }
+
     /**
      * Choose a variety of actions depending on the String input.
      *
@@ -51,6 +140,7 @@ public class Parser {
                     taskList.markDone(index - 1);
                     storage.saveTask(taskList);
                 }
+                // maybe should put this system.out.println in the else block!!
                 System.out.println(horizontalLine);
                 System.out.println("\t Nice! I've marked this task as done:");
                 System.out.println("\t   " + taskList.getTask().get(index - 1).toString());

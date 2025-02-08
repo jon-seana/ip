@@ -1,8 +1,7 @@
-[D][X] make pizza (by: May 2 2025, 4:00 pm)
-[T][ ] grill fish
-[D][ ] wash clothes (by: Feb 5 2025, 9:30 pm)
-[E][ ] meeting with james (from: Feb 5 2025, 3:30 pm to: Feb 5 2025, 4:00 pm)
-[T][ ] boil fish
-[T][X] return james his book
-[E][ ] cg with james (from: Feb 6 2025, 4:00 pm to: Feb 6 2025, 10:00 pm)
-[D][X] submit 2103t (by: Feb 6 2025, 11:59 pm)
+[D][X] wash clothes (by: Feb 5 2025, 9:30 pm)
+[T][ ] bake bread
+[E][X] buy water (from: Feb 5 2025, 4:00 pm to: Feb 5 2025, 4:30 pm)
+[T][ ] make pizza
+[D][X] do 2103t (by: Feb 10 2025, 4:15 pm)
+[T][ ] buy water
+[T][ ] make tea
