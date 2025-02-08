@@ -139,6 +139,46 @@ public class TaskList {
         }
     }
 
+    public String getTaskListString() {
+        StringBuilder taskListString = new StringBuilder();
+        if (tasks.isEmpty()) {
+            taskListString.append("\t You have no tasks in your list.");
+        } else {
+            taskListString.append("\t Here are the tasks in your list:");
+            int lengthOfList = tasks.size();
+            for (int i = 0; i < lengthOfList; i++) {
+                if (tasks.get(i) != null) {
+                    int b = i + 1;
+                    taskListString.append("\n").append("\t ").append(b).append(".").append(tasks.get(i).toString()).append("\n");
+                }
+            }
+        }
+        return taskListString.toString();
+    }
+
+    public String findTaskString(String keyword) {
+        ArrayList<Task> resultOfSearch = new ArrayList<>();
+        StringBuilder output = new StringBuilder();
+        for (Task task : tasks) {
+            if (task.toString().contains(keyword)) {
+                resultOfSearch.add(task);
+            }
+        }
+        if (resultOfSearch.isEmpty()) {
+            output.append("\t Error!! No matching tasks found.");
+        } else {
+            output.append("\t Here are the matching tasks in your list:");
+            int lengthOfList = resultOfSearch.size();
+            for (int i = 0; i < lengthOfList; i++) {
+                if (resultOfSearch.get(i) != null) {
+                    int b = i + 1;
+                    output.append("\t ").append(b).append(".").append(resultOfSearch.get(i).toString());
+                }
+            }
+        }
+        return output.toString();
+    }
+
     /**
      * Method to find a task from a keyword command input from user.
      *

@@ -20,7 +20,7 @@ import botzilla.task.Todo;
  */
 public class Storage {
     private static final String FILE_PATH = "src/main/tasks.txt";
-    private static final ArrayList<Task> tasks = new ArrayList<>();
+    private final ArrayList<Task> tasks = new ArrayList<>();
 
     private static void ensureFileExist() {
         File file = new File(Storage.FILE_PATH);

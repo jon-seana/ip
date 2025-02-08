@@ -51,6 +51,10 @@ public class Ui {
         System.out.println(horizontalLine);
     }
 
+    public String sayGoodByeString() {
+        return "Bye. Hope to see you again soon!";
+    }
+
     /**
      * Method to print out the empty list warning message.
      */
@@ -67,6 +71,19 @@ public class Ui {
         System.out.println(horizontalLine + "\n"
                                    + "\t Error!! You have no tasks in your list, please add a task first and try again."
                                    + "\n" + endFormat);
+    }
+
+    public String markUnmarkEmptyListString() {
+        return "Error!! You have no tasks in your list, please add a task first and try again.";
+    }
+
+    public String getPrintOutString(TaskList taskList, Task task) {
+        return taskFirstLine + "\n" + "\t   " + taskList.getTask().get(taskList.size() - 1).toString() + "\n"
+                + "\t Now you have " + taskList.size() + " tasks in the list.";
+    }
+
+    public String dontUnderstandString() {
+        return "Hey! I don't understand what you want me to do :(";
     }
 
     /**

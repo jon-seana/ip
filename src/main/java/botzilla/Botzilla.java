@@ -30,6 +30,11 @@ public class Botzilla {
         parser = new Parser(tasks, storage, ui);
     }
 
+    public String getResponse(String input) {
+        //return input;
+        return parser.parseString(input);
+    }
+
     /**
      * Method for executing the botzilla chatbot.
      */
