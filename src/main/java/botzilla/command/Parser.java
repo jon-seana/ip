@@ -29,6 +29,12 @@ public class Parser {
         this.ui = ui;
     }
 
+    /**
+     * Choose a variety of actions depending on the String input. Returns a String output for that action.
+     *
+     * @param input Input command.
+     * @return String.
+     */
     public String parseString(String input) {
         String horizontalLine = "\t_____________________________________________________________________";
         String endFormat = horizontalLine + "\n" + " ";

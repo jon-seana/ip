@@ -51,6 +51,11 @@ public class Ui {
         System.out.println(horizontalLine);
     }
 
+    /**
+     * Method to return the goodbye message.
+     *
+     * @return String.
+     */
     public String sayGoodByeString() {
         return "Bye. Hope to see you again soon!";
     }
@@ -73,15 +78,32 @@ public class Ui {
                                    + "\n" + endFormat);
     }
 
+    /**
+     * Method to return the mark and unmark of empty list warning message.
+     *
+     * @return String.
+     */
     public String markUnmarkEmptyListString() {
         return "Error!! You have no tasks in your list, please add a task first and try again.";
     }
 
+    /**
+     * Method to print out the message after executing a task input from user.
+     *
+     * @param taskList Tasklist.
+     * @param task Task.
+     * @return String.
+     */
     public String getPrintOutString(TaskList taskList, Task task) {
         return taskFirstLine + "\n" + "\t   " + taskList.getTask().get(taskList.size() - 1).toString() + "\n"
                 + "\t Now you have " + taskList.size() + " tasks in the list.";
     }
 
+    /**
+     * Method to print out the warning message for invalid command.
+     *
+     * @return String.
+     */
     public String dontUnderstandString() {
         return "Hey! I don't understand what you want me to do :(";
     }

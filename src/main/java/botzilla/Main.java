@@ -14,6 +14,11 @@ import javafx.stage.Stage;
 public class Main extends Application {
     private Botzilla botzilla = new Botzilla();
 
+    /**
+     * Starts the GUI application.
+     *
+     * @param stage Stage.
+     */
     @Override
     public void start(Stage stage) {
         try {

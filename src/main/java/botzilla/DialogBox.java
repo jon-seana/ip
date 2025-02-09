@@ -48,12 +48,26 @@ public class DialogBox extends HBox {
         setAlignment(Pos.TOP_LEFT);
     }
 
+    /**
+     * Returns a dialog box with the user's dialog.
+     *
+     * @param text Text to be displayed from user.
+     * @param img User image to be displayed.
+     * @return DialogBox.
+     */
     public static DialogBox getUserDialog(String text, Image img) {
         DialogBox db = new DialogBox(text, img);
         db.setAlignment(Pos.TOP_RIGHT);
         return db;
     }
 
+    /**
+     * Returns a dialog box with the botzilla's dialog.
+     *
+     * @param text Text to be displayed from botzilla.
+     * @param img Botzilla image to be displayed.
+     * @return DialogBox.
+     */
     public static DialogBox getBotzillaDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();

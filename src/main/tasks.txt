@@ -4,4 +4,4 @@
 [T][ ] make pizza
 [D][X] do 2103t (by: Feb 10 2025, 4:15 pm)
 [T][ ] buy water
-[T][ ] make tea
+[T][X] make tea

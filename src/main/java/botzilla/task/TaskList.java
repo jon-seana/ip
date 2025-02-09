@@ -149,13 +149,20 @@ public class TaskList {
             for (int i = 0; i < lengthOfList; i++) {
                 if (tasks.get(i) != null) {
                     int b = i + 1;
-                    taskListString.append("\n").append("\t ").append(b).append(".").append(tasks.get(i).toString()).append("\n");
+                    taskListString.append("\n").append("\t ").append(b).append(".")
+                                                                       .append(tasks.get(i).toString()).append("\n");
                 }
             }
         }
         return taskListString.toString();
     }
 
+    /**
+     * Method to find a list of tasks from a keyword command input from user.
+     *
+     * @param keyword Command to be typed in by user.
+     * @return String.
+     */
     public String findTaskString(String keyword) {
         ArrayList<Task> resultOfSearch = new ArrayList<>();
         StringBuilder output = new StringBuilder();
