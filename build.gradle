@@ -51,8 +51,8 @@ application {
 }
 
 shadowJar {
-    archiveBaseName = "botzilla"
-    archiveFileName = 'botzilla.jar'
+    archiveBaseName = "botzillaJarFile"
+    archiveFileName = 'botzillaJarFile.jar'
     archiveClassifier = null
 }
 
