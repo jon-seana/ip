@@ -29,6 +29,7 @@ public class Storage {
                 file.getParentFile().mkdirs();
                 file.createNewFile();
             }
+            assert file.exists() : "File is not readable at " + FILE_PATH;
         } catch (IOException e) {
             System.out.println("Error creating file");
         }
@@ -42,12 +43,18 @@ public class Storage {
      */
     public ArrayList<Task> loadTask() throws BotzillaException {
         ensureFileExist();
+        File file = new File(FILE_PATH);
+        assert file.exists() : "File is not readable at " + FILE_PATH;
         try {
             BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH));
             String line;
             while ((line = reader.readLine()) != null) {
+                assert !line.trim().isEmpty() : "Encountered empty line in task file";
                 String[] parts = line.split(" ");
+                assert parts[0].length() >= 2 : "Invalid task format in line: " + line;
                 String type = parts[0].substring(1, 2);
+                assert type.equals("T") || type.equals("D") || type.equals("E")
+                        : "Invalid task type " + type + " in line: " + line;
                 boolean isDone = parts[0].length() > 4 && parts[0].substring(4, 5).equals("X");
 
                 if (type.equals("T")) {
@@ -90,10 +97,12 @@ public class Storage {
      * @param tasks Tasks.
      */
     public void saveTask(TaskList tasks) {
+        assert tasks != null : "Task should not be null in saveTask() method";
         ArrayList<Task> taskList = tasks.getTask();
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH));
             for (Task task : taskList) {
+                assert task != null : "Encountered null task while saving";
                 writer.write(task.saveData() + "\n");
             }
             writer.close();
