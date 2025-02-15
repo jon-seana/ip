@@ -1,4 +1,6 @@
 package botzilla.task;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import botzilla.exception.BotzillaException;
@@ -104,10 +106,19 @@ public class TaskList {
         return tasks.isEmpty();
     }
 
+    /**
+     * Method to return the list of tasks in a string format.
+     *
+     * @return String.
+     */
     public String getTaskListString() {
         if (tasks.isEmpty()) {
             return "\t You have no tasks in your list.";
         }
+        return buildTaskList().toString();
+    }
+
+    private StringBuilder buildTaskList() {
         StringBuilder taskListString = new StringBuilder();
         taskListString.append("\t Here are the tasks in your list:");
         int lengthOfList = tasks.size();
@@ -119,7 +130,7 @@ public class TaskList {
                               .append(tasks.get(i).toString()).append("\n");
             }
         }
-        return taskListString.toString();
+        return taskListString;
     }
 
     /**
@@ -145,10 +156,97 @@ public class TaskList {
             Task task = resultOfSearch.get(i);
             if (task != null) {
                 int taskNumber = i + 1;
-                findTaskString.append("\t ").append(taskNumber).append(".").append(resultOfSearch.get(i)
-                                                                                           .toString()).append("\n");
+                findTaskString.append("\t ").append(taskNumber).append(".")
+                                                               .append(resultOfSearch.get(i).toString()).append("\n");
             }
         }
         return findTaskString.toString();
+    }
+
+    /**
+     * The method used to sort time sensitive tasks in ascending order.
+     *
+     * @return String.
+     */
+    public String sortTaskList() {
+        if (tasks.isEmpty()) {
+            return "\t You have no tasks in your list.";
+        }
+        String sortedDeadlines = sortDeadlines();
+        String sortedEvents = sortEvents();
+        return sortedDeadlines + "\n\n" + sortedEvents;
+    }
+
+    private String sortEvents() {
+        ArrayList<String> eventList = new ArrayList<>();
+        for (Task task : tasks) {
+            String taskString = task.toString();
+            String typeOfTask = taskString.substring(1, 2);
+            if (typeOfTask.equals("E")) {
+                eventList.add(taskString);
+            }
+        }
+        return sortEventsOnStartDate(eventList);
+    }
+
+    private String sortEventsOnStartDate(ArrayList<String> eventList) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a");
+        // Only sort based on the start date of each event
+        eventList.sort((s1, s2) -> {
+            LocalDateTime firstDate = extractEventStartDate(s1, formatter);
+            LocalDateTime secondDate = extractEventStartDate(s2, formatter);
+            return firstDate.compareTo(secondDate);
+        });
+        StringBuilder sortedEvents = new StringBuilder();
+        sortedEvents.append("\t Here are the sorted events in ascending order:");
+        int taskNumber = 1;
+        for (String event : eventList) {
+            sortedEvents.append("\n").append("\t ").append(taskNumber++)
+                                                   .append(". ").append(event);
+        }
+        return sortedEvents.toString();
+    }
+
+    private LocalDateTime extractEventStartDate(String taskString, DateTimeFormatter formatter) {
+        int startIndex = taskString.indexOf("from:") + 5;
+        int endIndex = taskString.indexOf("to:") - 1;
+        String date = taskString.substring(startIndex, endIndex).trim();
+        return LocalDateTime.parse(date, formatter);
+    }
+
+    private String sortDeadlines() {
+        ArrayList<String> deadlineList = new ArrayList<>();
+        for (Task task : tasks) {
+            String taskString = task.toString();
+            String typeOfTask = taskString.substring(1, 2);
+            if (typeOfTask.equals("D")) {
+                deadlineList.add(taskString);
+            }
+        }
+        return sortDeadlinesOnStartDate(deadlineList);
+    }
+
+    private String sortDeadlinesOnStartDate(ArrayList<String> deadlineList) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a");
+        deadlineList.sort((s1, s2) -> {
+            LocalDateTime firstDate = extractDeadlineDate(s1, formatter);
+            LocalDateTime secondDate = extractDeadlineDate(s2, formatter);
+            return firstDate.compareTo(secondDate);
+        });
+        StringBuilder sortedDeadlines = new StringBuilder();
+        sortedDeadlines.append("\t Here are the sorted deadlines in ascending order:");
+        int taskNumber = 1;
+        for (String deadline : deadlineList) {
+            sortedDeadlines.append("\n").append("\t ").append(taskNumber++)
+                                                      .append(". ").append(deadline);
+        }
+        return sortedDeadlines.toString();
+    }
+
+    private LocalDateTime extractDeadlineDate(String taskString, DateTimeFormatter formatter) {
+        int startIndex = taskString.indexOf("by:") + 4;
+        int endIndex = taskString.indexOf(")");
+        String date = taskString.substring(startIndex, endIndex).trim();
+        return LocalDateTime.parse(date, formatter);
     }
 }

@@ -1,5 +1,6 @@
 package botzilla.gui;
 
+import botzilla.Main;
 import javafx.application.Application;
 
 /**
