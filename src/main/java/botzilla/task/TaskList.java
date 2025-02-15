@@ -7,9 +7,6 @@ import botzilla.exception.BotzillaException;
  * Represents a class for common task related commands.
  */
 public class TaskList {
-    private static final String horizontalLine =
-            "\t_____________________________________________________________________";
-    private static final String endFormat = horizontalLine + "\n" + " ";
     private final ArrayList<Task> tasks;
 
     /**
