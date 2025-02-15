@@ -28,8 +28,10 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.setTitle("Botzilla");
             stage.setResizable(true);
-            stage.setMinHeight(600);
-            stage.setMinWidth(417);
+            int height = 600;
+            stage.setMinHeight(height);
+            int width = 417;
+            stage.setMinWidth(width);
             fxmlLoader.<MainWindow>getController().setBotzilla(botzilla);
             stage.show();
         } catch (IOException e) {

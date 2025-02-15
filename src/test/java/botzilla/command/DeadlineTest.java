@@ -8,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.Test;
 
 import botzilla.task.Deadline;
-import botzilla.ui.Ui;
 
 public class DeadlineTest {
     /**
@@ -17,8 +16,7 @@ public class DeadlineTest {
     @Test
     public void createDeadline_validInput_slashFormat_success() {
         String input = "deadline meeting bob /by 05/02/2025 1500";
-        Ui ui = new Ui();
-        Deadline deadline = Deadline.createDeadline(input, ui);
+        Deadline deadline = Deadline.createDeadline(input);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
         LocalDateTime expectedDateTime = LocalDateTime.parse("05/02/2025 1500", formatter);
         Deadline expected = new Deadline("meeting bob", expectedDateTime);
@@ -32,8 +30,7 @@ public class DeadlineTest {
     @Test
     public void createDeadline_validInput_dashFormat_success() {
         String input = "deadline meeting bob /by 2025-02-5 1500";
-        Ui ui = new Ui();
-        Deadline deadline = Deadline.createDeadline(input, ui);
+        Deadline deadline = Deadline.createDeadline(input);
         DateTimeFormatter formatterDash = DateTimeFormatter.ofPattern("yyyy-MM-d HHmm");
         LocalDateTime expectedDateTime = LocalDateTime.parse("2025-02-5 1500", formatterDash);
         Deadline expected = new Deadline("meeting bob", expectedDateTime);
@@ -47,8 +44,7 @@ public class DeadlineTest {
     @Test
     public void createDeadline_invalidInput_missingByDelimiter_returnsNull() {
         String input = "deadline meeting bob 05/02/2025 1500"; // Missing " /by "
-        Ui ui = new Ui();
-        Deadline deadline = Deadline.createDeadline(input, ui);
+        Deadline deadline = Deadline.createDeadline(input);
         assertNull(deadline, "Deadline should be null when the input is missing the '/by' delimiter.");
     }
 
@@ -58,8 +54,7 @@ public class DeadlineTest {
     @Test
     public void createDeadline_invalidInput_emptyDescription_returnsNull() {
         String input = "deadline   /by 05/02/2025 1500"; // Description is empty
-        Ui ui = new Ui();
-        Deadline deadline = Deadline.createDeadline(input, ui);
+        Deadline deadline = Deadline.createDeadline(input);
         assertNull(deadline, "Deadline should be null when the description is empty.");
     }
 
@@ -69,8 +64,7 @@ public class DeadlineTest {
     @Test
     public void createDeadline_invalidInput_emptyDate_returnsNull() {
         String input = "deadline meeting bob /by "; // Date is empty
-        Ui ui = new Ui();
-        Deadline deadline = Deadline.createDeadline(input, ui);
+        Deadline deadline = Deadline.createDeadline(input);
         assertNull(deadline, "Deadline should be null when the date is empty.");
     }
 
@@ -80,8 +74,7 @@ public class DeadlineTest {
     @Test
     public void createDeadline_invalidInput_invalidDateFormat_returnsNull() {
         String input = "deadline meeting bob /by invalidDate";
-        Ui ui = new Ui();
-        Deadline deadline = Deadline.createDeadline(input, ui);
+        Deadline deadline = Deadline.createDeadline(input);
         assertNull(deadline, "Deadline should be null when the date format is invalid.");
     }
 

@@ -46,41 +46,62 @@ public class Storage {
             BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH));
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(" ");
-                String type = parts[0].substring(1, 2);
-                boolean isDone = parts[0].length() > 4 && parts[0].substring(4, 5).equals("X");
-
-                if (type.equals("T")) {
-                    String description = line.substring(7).trim();
-                    Todo toDo = new Todo(description);
-                    if (isDone) {
-                        toDo.markAsDone();
-                    }
-                    tasks.add(toDo);
-                } else if (type.equals("D")) {
-                    String description = line.substring(7, line.indexOf("(by:")).trim();
-                    String date = line.substring(line.indexOf(":") + 2, line.indexOf(")")).trim();
-                    Deadline deadline = new Deadline(description, date);
-                    if (isDone) {
-                        deadline.markAsDone();
-                    }
-                    tasks.add(deadline);
-                } else if (type.equals("E")) {
-                    String description = line.substring(7, line.indexOf("(from:")).trim();
-                    String from = line.substring(line.indexOf("m:") + 3, line.indexOf("to:")).trim();
-                    String to = line.substring(line.indexOf("o:") + 3, line.indexOf(")")).trim();
-                    Event event = new Event(description, from, to);
-                    if (isDone) {
-                        event.markAsDone();
-                    }
-                    tasks.add(event);
-                }
+                processTaskLine(line);
             }
         } catch (IOException error) {
             System.out.println("No tasks found!");
         }
-
         return tasks;
+    }
+
+    private void processTaskLine(String line) {
+        String[] parts = line.split(" ");
+        String type = parts[0].substring(1, 2);
+        boolean isDone = parts[0].length() > 4 && parts[0].substring(4, 5).equals("X");
+
+        switch (type) {
+        case "T":
+            tasks.add(createTodoFromLine(line, isDone));
+            break;
+        case "D":
+            tasks.add(createDeadlineFromLine(line, isDone));
+            break;
+        case "E":
+            tasks.add(createEventFromLine(line, isDone));
+            break;
+        default:
+            break;
+        }
+    }
+
+    private Todo createTodoFromLine(String line, boolean isDone) {
+        String description = line.substring(7).trim();
+        Todo toDo = new Todo(description);
+        if (isDone) {
+            toDo.markAsDone();
+        }
+        return toDo;
+    }
+
+    private Deadline createDeadlineFromLine(String line, boolean isDone) {
+        String description = line.substring(7, line.indexOf("(by:")).trim();
+        String date = line.substring(line.indexOf(":") + 2, line.indexOf(")")).trim();
+        Deadline deadline = new Deadline(description, date);
+        if (isDone) {
+            deadline.markAsDone();
+        }
+        return deadline;
+    }
+
+    private Event createEventFromLine(String line, boolean isDone) {
+        String description = line.substring(7, line.indexOf("(from:")).trim();
+        String from = line.substring(line.indexOf("m:") + 3, line.indexOf("to:")).trim();
+        String to = line.substring(line.indexOf("o:") + 3, line.indexOf(")")).trim();
+        Event event = new Event(description, from, to);
+        if (isDone) {
+            event.markAsDone();
+        }
+        return event;
     }
 
     /**

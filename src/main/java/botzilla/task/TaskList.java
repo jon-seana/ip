@@ -2,7 +2,6 @@ package botzilla.task;
 import java.util.ArrayList;
 
 import botzilla.exception.BotzillaException;
-import botzilla.ui.Ui;
 
 /**
  * Represents a class for common task related commands.
@@ -11,7 +10,6 @@ public class TaskList {
     private static final String horizontalLine =
             "\t_____________________________________________________________________";
     private static final String endFormat = horizontalLine + "\n" + " ";
-    private static final Ui ui = new Ui();
     private final ArrayList<Task> tasks;
 
     /**
@@ -91,17 +89,15 @@ public class TaskList {
      * Method to delete task.
      *
      * @param input Command input containing the task number to be deleted.
-     * @param ui Ui.
      * @return String.
      */
-    public String deleteTask(String input, Ui ui) {
+    public String deleteTask(String input) {
         try {
             int index = Integer.parseInt(input.split(" ")[1]);
             String deleted = tasks.get(index - 1).toString();
             tasks.remove(index - 1);
             return deleted;
         } catch (NumberFormatException | IndexOutOfBoundsException error) {
-            ui.deleteError();
             return null;
         }
     }
@@ -115,43 +111,19 @@ public class TaskList {
         return tasks.isEmpty();
     }
 
-    /**
-     * Method to invoke the test(ArrayList (Type: Task) tasks) method.
-     */
-    public void listTask() {
-        test(tasks);
-    }
-
-    private static void test(ArrayList<Task> tasks) {
-        if (tasks.isEmpty()) {
-            TaskList.ui.listEmpty();
-        } else {
-            System.out.println(TaskList.horizontalLine);
-            System.out.println("\t Here are the tasks in your list:");
-            int lengthOfList = tasks.size();
-            for (int i = 0; i < lengthOfList; i++) {
-                if (tasks.get(i) != null) {
-                    int b = i + 1;
-                    System.out.println("\t " + b + "." + tasks.get(i).toString());
-                }
-            }
-            System.out.println(TaskList.endFormat);
-        }
-    }
-
     public String getTaskListString() {
-        StringBuilder taskListString = new StringBuilder();
         if (tasks.isEmpty()) {
-            taskListString.append("\t You have no tasks in your list.");
-        } else {
-            taskListString.append("\t Here are the tasks in your list:");
-            int lengthOfList = tasks.size();
-            for (int i = 0; i < lengthOfList; i++) {
-                if (tasks.get(i) != null) {
-                    int b = i + 1;
-                    taskListString.append("\n").append("\t ").append(b).append(".")
-                                                                       .append(tasks.get(i).toString()).append("\n");
-                }
+            return "\t You have no tasks in your list.";
+        }
+        StringBuilder taskListString = new StringBuilder();
+        taskListString.append("\t Here are the tasks in your list:");
+        int lengthOfList = tasks.size();
+        for (int i = 0; i < lengthOfList; i++) {
+            Task task = tasks.get(i);
+            if (task != null) {
+                int taskNumber = i + 1;
+                taskListString.append("\n").append("\t ").append(taskNumber).append(".")
+                              .append(tasks.get(i).toString()).append("\n");
             }
         }
         return taskListString.toString();
@@ -165,55 +137,25 @@ public class TaskList {
      */
     public String findTaskString(String keyword) {
         ArrayList<Task> resultOfSearch = new ArrayList<>();
-        StringBuilder output = new StringBuilder();
         for (Task task : tasks) {
             if (task.toString().contains(keyword)) {
                 resultOfSearch.add(task);
             }
         }
         if (resultOfSearch.isEmpty()) {
-            output.append("\t Error!! No matching tasks found.");
-        } else {
-            output.append("\t Here are the matching tasks in your list:");
-            int lengthOfList = resultOfSearch.size();
-            for (int i = 0; i < lengthOfList; i++) {
-                if (resultOfSearch.get(i) != null) {
-                    int b = i + 1;
-                    output.append("\t ").append(b).append(".").append(resultOfSearch.get(i).toString());
-                }
+            return "\t Error!! No matching tasks found.";
+        }
+        StringBuilder findTaskString = new StringBuilder();
+        findTaskString.append("\t Here are the matching tasks in your list:");
+        int lengthOfList = resultOfSearch.size();
+        for (int i = 0; i < lengthOfList; i++) {
+            Task task = resultOfSearch.get(i);
+            if (task != null) {
+                int taskNumber = i + 1;
+                findTaskString.append("\t ").append(taskNumber).append(".").append(resultOfSearch.get(i)
+                                                                                           .toString()).append("\n");
             }
         }
-        return output.toString();
-    }
-
-    /**
-     * Method to find a task from a keyword command input from user.
-     *
-     * @param keyword Command to be typed in by user.
-     * @param ui Ui.
-     */
-    public void findTask(String keyword, Ui ui) {
-        ArrayList<Task> resultOfSearch = new ArrayList<>();
-
-        for (Task task : tasks) {
-            if (task.toString().contains(keyword)) {
-                resultOfSearch.add(task);
-            }
-        }
-
-        if (resultOfSearch.isEmpty()) {
-            ui.findTaskError();
-        } else {
-            System.out.println(TaskList.horizontalLine);
-            System.out.println("\t Here are the matching tasks in your list:");
-            int lengthOfList = resultOfSearch.size();
-            for (int i = 0; i < lengthOfList; i++) {
-                if (resultOfSearch.get(i) != null) {
-                    int b = i + 1;
-                    System.out.println("\t " + b + "." + resultOfSearch.get(i).toString());
-                }
-            }
-            System.out.println(TaskList.endFormat);
-        }
+        return findTaskString.toString();
     }
 }

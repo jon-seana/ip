@@ -1,10 +1,5 @@
 package botzilla;
 
-import botzilla.command.Parser;
-import botzilla.exception.BotzillaException;
-import botzilla.storage.Storage;
-import botzilla.task.TaskList;
-import botzilla.ui.Ui;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -17,10 +12,6 @@ import javafx.scene.layout.VBox;
  * Controller for the main GUI.
  */
 public class MainWindow extends AnchorPane {
-    private static Storage storage;
-    private static TaskList tasks;
-    private static Ui ui;
-    private static Parser parser;
     private Botzilla botzilla;
     @FXML
     private ScrollPane scrollPane;
@@ -30,9 +21,8 @@ public class MainWindow extends AnchorPane {
     private TextField userInput;
     @FXML
     private Button sendButton;
-
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
-    private Image botzillaImage = new Image(this.getClass().getResourceAsStream("/images/Botzilla.png"));
+    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
+    private final Image botzillaImage = new Image(this.getClass().getResourceAsStream("/images/Botzilla.png"));
 
     /**
      * Initializes the main window.
@@ -43,16 +33,6 @@ public class MainWindow extends AnchorPane {
         dialogContainer.getChildren().addAll(
                 DialogBox.getBotzillaDialog("Hello! I'm Botzilla. How can I help you today?", botzillaImage)
         );
-        ui = new Ui();
-        storage = new Storage();
-        try {
-            tasks = new TaskList(storage.loadTask());
-        } catch (BotzillaException error) {
-            ui.showErrorMessage("unable to load tasks!!");
-            tasks = new TaskList();
-        }
-        parser = new Parser(tasks, storage, ui);
-        botzilla = new Botzilla();
     }
 
     /**

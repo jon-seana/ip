@@ -10,8 +10,6 @@ import botzilla.ui.Ui;
  * Represents the Botzilla main class.
  */
 public class Botzilla {
-    private static Storage storage;
-    private static TaskList tasks;
     private static Ui ui;
     private static Parser parser;
 
@@ -20,7 +18,8 @@ public class Botzilla {
      */
     public Botzilla() {
         ui = new Ui();
-        storage = new Storage();
+        Storage storage = new Storage();
+        TaskList tasks;
         try {
             tasks = new TaskList(storage.loadTask());
         } catch (BotzillaException error) {
@@ -44,10 +43,9 @@ public class Botzilla {
      * Method for executing the botzilla chatbot.
      */
     public void run() {
-        ui.showGreeting();
         while (true) {
             String input = ui.readLine();
-            parser.parse(input);
+            parser.parseString(input);
         }
     }
 

@@ -3,7 +3,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import botzilla.ui.Ui;
+import botzilla.command.Parser;
 
 /**
  * Represents the class for the task event.
@@ -45,48 +45,27 @@ public class Event extends Task {
      * Method for creating event.
      *
      * @param input Input.
-     * @param ui Ui.
-     * @return Event Event.
+     * @return Event
      */
-    public static Event createEvent(String input, Ui ui) {
+    public static Event createEvent(String input) {
+        if (!input.contains(" /from ") || !input.contains(" /to ")) {
+            return null;
+        }
+        String[] eventInput = input.split(" /from ");
+        String description = eventInput[0].substring(6).trim();
+        if (description.isEmpty()) {
+            return null;
+        }
+        String from = (eventInput[1].split(" /to "))[0].trim();
+        String to = (eventInput[1].split(" /to "))[1].trim();
+        if (from.isEmpty() || to.isEmpty()) {
+            return null;
+        }
         try {
-            if (!input.contains(" /from ") || !input.contains(" /to ")) {
-                ui.eventParse();
-                return null;
-            }
-            String[] eventInput = input.split(" /from ");
-            String description = eventInput[0].substring(6).trim();
-            if (description.isEmpty()) {
-                ui.eventParse();
-                return null;
-            }
-            String from = (eventInput[1].split(" /to "))[0].trim();
-            String to = (eventInput[1].split(" /to "))[1].trim();
-            if (from.isEmpty() || to.isEmpty()) {
-                ui.eventParse();
-                return null;
-            }
-            LocalDateTime fromDate;
-            LocalDateTime toDate;
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
-            DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-d HHmm");
-            if (from.contains("/")) {
-                fromDate = LocalDateTime.parse(from, formatter);
-            } else if (from.contains("-")) {
-                fromDate = LocalDateTime.parse(from, formatter2);
-            } else {
-                throw new DateTimeParseException("Invalid date format: " + from, from, 0);
-            }
-            if (to.contains("/")) {
-                toDate = LocalDateTime.parse(to, formatter);
-            } else if (to.contains("-")) {
-                toDate = LocalDateTime.parse(to, formatter2);
-            } else {
-                throw new DateTimeParseException("Invalid date format: " + to, to, 0);
-            }
+            LocalDateTime fromDate = Parser.parseDate(from);
+            LocalDateTime toDate = Parser.parseDate(to);
             return new Event(description, fromDate, toDate);
-        } catch (IndexOutOfBoundsException | DateTimeParseException error) {
-            ui.eventParse();
+        } catch (DateTimeParseException e) {
             return null;
         }
     }
@@ -102,9 +81,8 @@ public class Event extends Task {
             return "[E]" + super.toString()
                     + " (from: " + fromDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a"))
                     + " to: " + toDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) + ")";
-        } else {
-            return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
         }
+        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
     }
 
     /**
@@ -118,8 +96,7 @@ public class Event extends Task {
             return "[E]" + super.toString()
                     + " (from: " + fromDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a"))
                     + " to: " + toDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) + ")";
-        } else {
-            return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
         }
+        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
     }
 }
