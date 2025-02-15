@@ -43,6 +43,7 @@ public class Deadline extends Task {
      * @return Deadline Deadline.
      */
     public static Deadline createDeadline(String input, Ui ui) {
+        assert input != null && !input.trim().isEmpty() : "Input should not be null";
         try {
             if (!input.contains(" /by ")) {
                 ui.deadLineParse();

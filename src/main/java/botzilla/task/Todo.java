@@ -19,6 +19,7 @@ public class Todo extends Task {
      * @return a new Todo task if the description is valid; otherwise, returns null.
      */
     public static Todo createTodo(String input, Ui ui) {
+        assert input != null && !input.trim().isEmpty() : "Input should not be null";
         try {
             String description = input.substring(5).trim();
             if (description.isEmpty()) {

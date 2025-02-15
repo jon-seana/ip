@@ -25,6 +25,8 @@ public class DialogBox extends HBox {
     private ImageView displayPicture;
 
     private DialogBox(String text, Image img) {
+        assert text != null : "DialogBox text cannot be null";
+        assert img != null : "DialogBox image cannot be null";
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
             fxmlLoader.setController(this);
@@ -56,6 +58,8 @@ public class DialogBox extends HBox {
      * @return DialogBox.
      */
     public static DialogBox getUserDialog(String text, Image img) {
+        assert text != null : "User text cannot be null";
+        assert img != null : "User image cannot be null";
         DialogBox db = new DialogBox(text, img);
         db.setAlignment(Pos.TOP_RIGHT);
         return db;
@@ -69,6 +73,8 @@ public class DialogBox extends HBox {
      * @return DialogBox.
      */
     public static DialogBox getBotzillaDialog(String text, Image img) {
+        assert text != null : "Botzilla text cannot be null";
+        assert img != null : "Botzilla image cannot be null";
         var db = new DialogBox(text, img);
         db.flip();
         return db;
