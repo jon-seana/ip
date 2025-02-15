@@ -48,6 +48,7 @@ public class Event extends Task {
      * @return Event
      */
     public static Event createEvent(String input) {
+        assert input != null && !input.trim().isEmpty() : "Input should not be null";
         if (!input.contains(" /from ") || !input.contains(" /to ")) {
             return null;
         }

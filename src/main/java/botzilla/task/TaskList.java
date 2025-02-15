@@ -63,9 +63,7 @@ public class TaskList {
      */
     public void markDone(int index) throws BotzillaException {
         if (index < 0 || index >= tasks.size()) {
-            throw new BotzillaException(horizontalLine + "\n"
-                                               + "\t Error!! Please enter a valid task number you want to mark as done."
-                                               + "\n" + endFormat);
+            throw new BotzillaException("\t Error!! Please enter a valid task number you want to mark as done.");
         }
         tasks.get(index).markAsDone();
     }
@@ -78,9 +76,7 @@ public class TaskList {
      */
     public void markUndone(int index) throws BotzillaException {
         if (index < 0 || index >= tasks.size()) {
-            throw new BotzillaException(horizontalLine + "\n"
-                                             + "\t Error!! Please enter a valid task number you want to mark as undone."
-                                             + "\n" + endFormat);
+            throw new BotzillaException("\t Error!! Please enter a valid task number you want to mark as undone.");
         }
         tasks.get(index).markAsUndone();
     }

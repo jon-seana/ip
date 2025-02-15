@@ -29,6 +29,7 @@ public class Storage {
                 file.getParentFile().mkdirs();
                 file.createNewFile();
             }
+            assert file.exists() : "File is not readable at " + FILE_PATH;
         } catch (IOException e) {
             System.out.println("Error creating file");
         }
@@ -55,6 +56,7 @@ public class Storage {
     }
 
     private void processTaskLine(String line) {
+        assert !line.trim().isEmpty() : "Encountered empty line in task file!";
         String[] parts = line.split(" ");
         String type = parts[0].substring(1, 2);
         boolean isDone = parts[0].length() > 4 && parts[0].substring(4, 5).equals("X");
@@ -111,10 +113,12 @@ public class Storage {
      * @param tasks Tasks.
      */
     public void saveTask(TaskList tasks) {
+        assert tasks != null : "Task should not be null in saveTask() method";
         ArrayList<Task> taskList = tasks.getTask();
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH));
             for (Task task : taskList) {
+                assert task != null : "Encountered null task while saving";
                 writer.write(task.saveData() + "\n");
             }
             writer.close();

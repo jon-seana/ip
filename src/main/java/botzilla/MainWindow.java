@@ -53,6 +53,7 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String userInputText = userInput.getText();
         String botResponse = botzilla.getResponse(userInputText);
+        assert botResponse != null : "Botzilla response should not be null";
         if (userInputText.trim().equals("bye")) {
             System.exit(0);
         }
