@@ -10,8 +10,6 @@ import botzilla.ui.Ui;
  * Represents the Botzilla main class.
  */
 public class Botzilla {
-    private static Storage storage;
-    private static TaskList tasks;
     private static Ui ui;
     private static Parser parser;
 
@@ -20,7 +18,8 @@ public class Botzilla {
      */
     public Botzilla() {
         ui = new Ui();
-        storage = new Storage();
+        Storage storage = new Storage();
+        TaskList tasks;
         try {
             tasks = new TaskList(storage.loadTask());
         } catch (BotzillaException error) {
@@ -31,30 +30,30 @@ public class Botzilla {
     }
 
     /**
-     * Method to get the String response from the botzilla chatbot.
+     * Returns the response from the botzilla chatbot based on the user input command.
      *
-     * @param input Input command from user.
-     * @return String.
+     * @param input The user's input command.
+     * @return The chatbot's response as a String.
      */
     public String getResponse(String input) {
         return parser.parseString(input);
     }
 
     /**
-     * Method for executing the botzilla chatbot.
+     * Starts the botzilla chatbot in an interactive loop
+     * that will run until the user inputs the command "bye".
      */
     public void run() {
-        ui.showGreeting();
         while (true) {
             String input = ui.readLine();
-            parser.parse(input);
+            parser.parseString(input);
         }
     }
 
     /**
-     * The main method for entry into the botzilla chatbot.
+     * The main entry point for running the botzilla chatbot application.
      *
-     * @param args Arguments to be input by user.
+     * @param args Command line arguments.
      */
     public static void main(String[] args) {
         new Botzilla().run();

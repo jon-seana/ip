@@ -1,5 +1,7 @@
-[D][ ] wash clothes (by: Feb 5 2025, 9:30 pm)
-[T][X] bake bread
-[T][X] make pizza
+[E][X] buy water (from: Feb 5 2025, 4:00 pm to: Feb 5 2025, 4:30 pm)
 [D][X] do 2103t (by: Feb 10 2025, 4:15 pm)
-[T][ ] make tea
+[E][X] meet friends (from: Feb 5 2025, 4:00 pm to: Feb 5 2025, 4:30 pm)
+[D][ ] iron clothes (by: Jun 3 2025, 7:15 pm)
+[T][ ] buy water bottle
+[D][X] clean keyboard (by: Feb 15 2025, 5:40 pm)
+[E][X] make foccaia (from: Feb 15 2025, 5:30 pm to: Feb 15 2025, 6:30 pm)

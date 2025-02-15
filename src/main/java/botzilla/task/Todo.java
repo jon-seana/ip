@@ -1,6 +1,5 @@
 package botzilla.task;
 
-import botzilla.ui.Ui;
 
 /**
  * Represents the class for todo task.
@@ -15,20 +14,17 @@ public class Todo extends Task {
      * If the description is missing or empty, the corresponding UI error message is shown.
      *
      * @param input the full user input string.
-     * @param ui the UI instance used to display error messages.
      * @return a new Todo task if the description is valid; otherwise, returns null.
      */
-    public static Todo createTodo(String input, Ui ui) {
+    public static Todo createTodo(String input) {
         assert input != null && !input.trim().isEmpty() : "Input should not be null";
         try {
             String description = input.substring(5).trim();
             if (description.isEmpty()) {
-                ui.toDoIncomplete();
                 return null;
             }
             return new Todo(description);
         } catch (IndexOutOfBoundsException e) {
-            ui.toDoError();
             return null;
         }
     }

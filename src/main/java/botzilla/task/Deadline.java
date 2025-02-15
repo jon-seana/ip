@@ -3,7 +3,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import botzilla.ui.Ui;
+import botzilla.command.Parser;
 
 /**
  * Represents the class for the task deadline.
@@ -39,36 +39,23 @@ public class Deadline extends Task {
      * Method for creating deadline task and to check for errors and formatting issues.
      *
      * @param input Input.
-     * @param ui Ui.
      * @return Deadline Deadline.
      */
-    public static Deadline createDeadline(String input, Ui ui) {
+    public static Deadline createDeadline(String input) {
         assert input != null && !input.trim().isEmpty() : "Input should not be null";
+        if (!input.contains(" /by ")) {
+            return null;
+        }
+        String[] deadlineInput = input.split(" /by ");
+        String description = deadlineInput[0].substring(9).trim();
+        String date = deadlineInput[1].trim();
+        if (description.isEmpty() || date.isEmpty()) {
+            return null;
+        }
         try {
-            if (!input.contains(" /by ")) {
-                ui.deadLineParse();
-                return null;
-            }
-            String[] deadlineInput = input.split(" /by ");
-            String description = deadlineInput[0].substring(9).trim();
-            String date = deadlineInput[1].trim();
-            if (description.isEmpty() || date.isEmpty()) {
-                ui.deadLineParse();
-                return null;
-            }
-            LocalDateTime byDate;
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
-            DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-d HHmm");
-            if (date.contains("/")) {
-                byDate = LocalDateTime.parse(date, formatter);
-            } else if (date.contains("-")) {
-                byDate = LocalDateTime.parse(date, formatter2);
-            } else {
-                throw new DateTimeParseException("Invalid date format", date, 0);
-            }
+            LocalDateTime byDate = Parser.parseDate(date);
             return new Deadline(description, byDate);
-        } catch (IndexOutOfBoundsException | DateTimeParseException error) {
-            ui.deadLineParse();
+        } catch (DateTimeParseException e) {
             return null;
         }
     }
@@ -83,9 +70,8 @@ public class Deadline extends Task {
         if (byDate != null) {
             return "[D]" + super.toString()
                     + " (by: " + byDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) + ")";
-        } else {
-            return "[D]" + super.toString() + " (by: " + date + ")";
         }
+        return "[D]" + super.toString() + " (by: " + date + ")";
     }
 
     /**
@@ -98,8 +84,7 @@ public class Deadline extends Task {
         if (byDate != null) {
             return "[D]" + super.toString()
                     + " (by: " + byDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) + ")";
-        } else {
-            return "[D]" + super.toString() + " (by: " + date + ")";
         }
+        return "[D]" + super.toString() + " (by: " + date + ")";
     }
 }
