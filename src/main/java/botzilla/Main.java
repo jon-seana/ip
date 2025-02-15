@@ -1,8 +1,8 @@
-package botzilla.gui;
+package botzilla;
 
 import java.io.IOException;
 
-import botzilla.Botzilla;
+import botzilla.gui.MainWindow;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

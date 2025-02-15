@@ -4,6 +4,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import botzilla.command.Parser;
+import botzilla.exception.BotzillaException;
 
 /**
  * Represents the class for the task event.
@@ -47,7 +48,7 @@ public class Event extends Task {
      * @param input Input.
      * @return Event
      */
-    public static Event createEvent(String input) {
+    public static Event createEvent(String input) throws BotzillaException {
         assert input != null && !input.trim().isEmpty() : "Input should not be null";
         if (!input.contains(" /from ") || !input.contains(" /to ")) {
             return null;
@@ -62,9 +63,14 @@ public class Event extends Task {
         if (from.isEmpty() || to.isEmpty()) {
             return null;
         }
+        // Main happy path code
         try {
             LocalDateTime fromDate = Parser.parseDate(from);
             LocalDateTime toDate = Parser.parseDate(to);
+            // To ensure that From and To dates are in the correct order
+            if (!fromDate.isBefore(toDate)) {
+                throw new BotzillaException("From date and time should be before To date and time.");
+            }
             return new Event(description, fromDate, toDate);
         } catch (DateTimeParseException e) {
             return null;

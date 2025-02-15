@@ -59,6 +59,8 @@ public class Parser {
                 return handleDeleteCommand(input);
             } else if (input.startsWith("find")) {
                 return handleFindCommand(input);
+            } else if (input.trim().equals("sort")) {
+                return taskList.sortTaskList();
             } else {
                 return ui.dontUnderstandString();
             }
@@ -100,24 +102,22 @@ public class Parser {
         int index = parseIndex(input);
         if (taskList.isEmpty()) {
             return ui.markUnmarkEmptyListString();
-        } else {
-            taskList.markDone(index - 1);
-            storage.saveTask(taskList);
-            return "\t Nice! I've marked this task as done:" + "\n"
-                    + "\t   " + taskList.getTask().get(index - 1).toString();
         }
+        taskList.markDone(index - 1);
+        storage.saveTask(taskList);
+        return "\t Nice! I've marked this task as done:" + "\n"
+                + "\t   " + taskList.getTask().get(index - 1).toString();
     }
 
     private String handleUnmarkCommand(String input) throws BotzillaException {
         int index = parseIndex(input);
         if (taskList.isEmpty()) {
             return ui.markUnmarkEmptyListString();
-        } else {
-            taskList.markUndone(index - 1);
-            storage.saveTask(taskList);
-            return "\t OK, I've marked this task as not done yet:" + "\n"
-                    + "\t   " + taskList.getTask().get(index - 1).toString();
         }
+        taskList.markUndone(index - 1);
+        storage.saveTask(taskList);
+        return "\t OK, I've marked this task as not done yet:" + "\n"
+                + "\t   " + taskList.getTask().get(index - 1).toString();
     }
 
     private String handleTodoCommand(String input) {
@@ -140,7 +140,7 @@ public class Parser {
         return ui.getPrintOutString(taskList);
     }
 
-    private String handleEventCommand(String input) {
+    private String handleEventCommand(String input) throws BotzillaException {
         Event createEvent = Event.createEvent(input);
         if (createEvent == null) {
             return "\t Hi there! Please follow the format: event task /from d/mm/yyyy HHmm /to d/mm/yyyy HHmm.";
