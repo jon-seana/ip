@@ -30,17 +30,18 @@ public class Botzilla {
     }
 
     /**
-     * Method to get the String response from the botzilla chatbot.
+     * Returns the response from the botzilla chatbot based on the user input command.
      *
-     * @param input Input command from user.
-     * @return String.
+     * @param input The user's input command.
+     * @return The chatbot's response as a String.
      */
     public String getResponse(String input) {
         return parser.parseString(input);
     }
 
     /**
-     * Method for executing the botzilla chatbot.
+     * Starts the botzilla chatbot in an interactive loop
+     * that will run until the user inputs the command "bye".
      */
     public void run() {
         while (true) {
@@ -50,9 +51,9 @@ public class Botzilla {
     }
 
     /**
-     * The main method for entry into the botzilla chatbot.
+     * The main entry point for running the botzilla chatbot application.
      *
-     * @param args Arguments to be input by user.
+     * @param args Command line arguments.
      */
     public static void main(String[] args) {
         new Botzilla().run();
