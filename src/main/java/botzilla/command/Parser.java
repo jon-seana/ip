@@ -41,25 +41,26 @@ public class Parser {
      */
     public String parseString(String input) {
         try {
-            if (input.trim().equals("list")) {
+            String trimmedInput = input.trim();
+            if (trimmedInput.equals("list")) {
                 return taskList.getTaskListString();
-            } else if (input.trim().equals("bye")) {
+            } else if (trimmedInput.equals("bye")) {
                 return ui.sayGoodByeString();
-            } else if (input.startsWith("mark")) {
-                return handleMarkCommand(input);
-            } else if (input.startsWith("unmark")) {
-                return handleUnmarkCommand(input);
-            } else if (input.startsWith("todo")) {
-                return handleTodoCommand(input);
-            } else if (input.startsWith("deadline")) {
-                return handleDeadlineCommand(input);
-            } else if (input.startsWith("event")) {
-                return handleEventCommand(input);
-            } else if (input.startsWith("delete")) {
-                return handleDeleteCommand(input);
-            } else if (input.startsWith("find")) {
-                return handleFindCommand(input);
-            } else if (input.trim().equals("sort")) {
+            } else if (trimmedInput.startsWith("mark")) {
+                return handleMarkCommand(trimmedInput);
+            } else if (trimmedInput.startsWith("unmark")) {
+                return handleUnmarkCommand(trimmedInput);
+            } else if (trimmedInput.startsWith("todo")) {
+                return handleTodoCommand(trimmedInput);
+            } else if (trimmedInput.startsWith("deadline")) {
+                return handleDeadlineCommand(trimmedInput);
+            } else if (trimmedInput.startsWith("event")) {
+                return handleEventCommand(trimmedInput);
+            } else if (trimmedInput.startsWith("delete")) {
+                return handleDeleteCommand(trimmedInput);
+            } else if (trimmedInput.startsWith("find")) {
+                return handleFindCommand(trimmedInput);
+            } else if (trimmedInput.equals("sort")) {
                 return taskList.sortTaskList();
             } else {
                 return ui.dontUnderstandString();
@@ -75,8 +76,16 @@ public class Parser {
             String[] parts = input.split(" ");
             return Integer.parseInt(parts[1]);
         } catch (NumberFormatException | IndexOutOfBoundsException error) {
-            throw new BotzillaException("\t Error!! Please enter a valid task number you want to mark as done.");
+            throw new BotzillaException("Error!! Please enter a valid task number you want to mark/unmark as done.");
         }
+    }
+
+    private void duplicateInstrChecker(String input) throws BotzillaException {
+        String[] tokens = input.split("\\s+");
+        if (tokens.length > 2) {
+            throw new BotzillaException("Hey! No duplicate instructions within a single command please.");
+        }
+
     }
 
     /**
@@ -99,41 +108,45 @@ public class Parser {
 
     // Methods to help parseString method
     private String handleMarkCommand(String input) throws BotzillaException {
-        int index = parseIndex(input);
+        duplicateInstrChecker(input);
+        String trimmedInput = input.replaceAll("\\s+", " ");
+        int index = parseIndex(trimmedInput);
         if (taskList.isEmpty()) {
             return ui.markUnmarkEmptyListString();
         }
         taskList.markDone(index - 1);
         storage.saveTask(taskList);
-        return "\t Nice! I've marked this task as done:" + "\n"
-                + "\t   " + taskList.getTask().get(index - 1).toString();
+        return "Nice! I've marked this task as done:" + "\n"
+                + taskList.getTask().get(index - 1).toString();
     }
 
     private String handleUnmarkCommand(String input) throws BotzillaException {
-        int index = parseIndex(input);
+        duplicateInstrChecker(input);
+        String trimmedInput = input.replaceAll("\\s+", " ");
+        int index = parseIndex(trimmedInput);
         if (taskList.isEmpty()) {
             return ui.markUnmarkEmptyListString();
         }
         taskList.markUndone(index - 1);
         storage.saveTask(taskList);
-        return "\t OK, I've marked this task as not done yet:" + "\n"
-                + "\t   " + taskList.getTask().get(index - 1).toString();
+        return "OK, I've marked this task as not done yet:" + "\n"
+                + taskList.getTask().get(index - 1).toString();
     }
 
-    private String handleTodoCommand(String input) {
+    private String handleTodoCommand(String input) throws BotzillaException {
         Todo createTodo = Todo.createTodo(input);
         if (createTodo == null) {
-            return "\t Hi there! Please add a description for a todo task.";
+            throw new BotzillaException("Hi there! Please add a description for a todo task.");
         }
         taskList.addTask(createTodo);
         storage.saveTask(taskList);
         return ui.getPrintOutString(taskList);
     }
 
-    private String handleDeadlineCommand(String input) {
+    private String handleDeadlineCommand(String input) throws BotzillaException {
         Deadline createDeadline = Deadline.createDeadline(input);
         if (createDeadline == null) {
-            return "\t Hi there! Please follow the format: deadline task /by d/mm/yyyy HHmm.";
+            throw new BotzillaException("Hi there! Please follow the format (e.g. deadline sleep /by 18/02/2025 1630)");
         }
         taskList.addTask(createDeadline);
         storage.saveTask(taskList);
@@ -143,29 +156,32 @@ public class Parser {
     private String handleEventCommand(String input) throws BotzillaException {
         Event createEvent = Event.createEvent(input);
         if (createEvent == null) {
-            return "\t Hi there! Please follow the format: event task /from d/mm/yyyy HHmm /to d/mm/yyyy HHmm.";
+            throw new BotzillaException(
+                    "Hi there! Please follow the format (e.g. event sleep /from 18/02/2025 1630 /to 18/02/2025 1730)");
         }
         taskList.addTask(createEvent);
         storage.saveTask(taskList);
         return ui.getPrintOutString(taskList);
     }
 
-    private String handleDeleteCommand(String input) {
-        String deleted = taskList.deleteTask(input);
+    private String handleDeleteCommand(String input) throws BotzillaException {
+        duplicateInstrChecker(input);
+        String trimmedInput = input.replaceAll("\\s+", " ");
+        String deleted = taskList.deleteTask(trimmedInput);
         if (deleted == null) {
-            return "\t Hi there! Please enter a valid task number you want to delete." + "\n"
-                    + "\t The task number you provided may have been removed or may not exist at all.";
+            throw new BotzillaException("Hi there! Please enter a valid task number you want to delete." + "\n"
+                    + "The task number you provided may have been removed or may not exist at all.");
         }
         storage.saveTask(taskList);
-        return "\t Noted. I've removed this task:" + "\n" + "\t   " + deleted
-                + "\n" + "\t Now you have " + taskList.size() + " tasks in the list.";
+        return "Noted. I've removed this task:" + "\n" + deleted
+                + "\n" + "Now you have " + taskList.size() + " tasks in the list.";
     }
 
     private String handleFindCommand(String input) throws BotzillaException {
         if (input.length() <= 5) {
-            throw new BotzillaException("\t Find command requires this format:" + "\n" + "\t find <keyword(s)>");
+            throw new BotzillaException("Find command requires this format:" + "\n" + "find <keyword(s)>");
         }
-        String keyword = input.substring(4);
+        String keyword = input.substring(4).replaceAll("\\s+", " ");
         return taskList.findTaskString(keyword);
     }
 }

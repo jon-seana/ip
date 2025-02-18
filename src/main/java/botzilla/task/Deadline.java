@@ -47,7 +47,7 @@ public class Deadline extends Task {
             return null;
         }
         String[] deadlineInput = input.split(" /by ");
-        String description = deadlineInput[0].substring(9).trim();
+        String description = deadlineInput[0].substring(9).trim().replaceAll("\\s+", " ");
         String date = deadlineInput[1].trim();
         if (description.isEmpty() || date.isEmpty()) {
             return null;
@@ -69,7 +69,7 @@ public class Deadline extends Task {
     public String saveData() {
         if (byDate != null) {
             return "[D]" + super.toString()
-                    + " (by: " + byDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) + ")";
+                         + " (by: " + byDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) + ")";
         }
         return "[D]" + super.toString() + " (by: " + date + ")";
     }
@@ -83,7 +83,7 @@ public class Deadline extends Task {
     public String toString() {
         if (byDate != null) {
             return "[D]" + super.toString()
-                    + " (by: " + byDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) + ")";
+                         + " (by: " + byDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) + ")";
         }
         return "[D]" + super.toString() + " (by: " + date + ")";
     }
