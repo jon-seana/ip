@@ -32,7 +32,7 @@ public class MainWindow extends AnchorPane {
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
         dialogContainer.getChildren().addAll(
-                DialogBox.getBotzillaDialog("Hello! I'm Botzilla. How can I help you today?", botzillaImage)
+                DialogBox.getBotzillaDialog("Hello! I'm Botzilla. How can I help you today?", botzillaImage, "hello")
         );
     }
 
@@ -54,13 +54,14 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String userInputText = userInput.getText();
         String botResponse = botzilla.getResponse(userInputText);
+        String commandType = userInput.getText();
         assert botResponse != null : "Botzilla response should not be null";
         if (userInputText.trim().equals("bye")) {
             System.exit(0);
         }
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(userInputText, userImage),
-                DialogBox.getBotzillaDialog(botResponse, botzillaImage)
+                DialogBox.getBotzillaDialog(botResponse, botzillaImage, commandType)
         );
         userInput.clear();
     }

@@ -54,7 +54,7 @@ public class Event extends Task {
             return null;
         }
         String[] eventInput = input.split(" /from ");
-        String description = eventInput[0].substring(6).trim();
+        String description = eventInput[0].substring(6).trim().replaceAll("\\s+", " ");
         if (description.isEmpty()) {
             return null;
         }
@@ -86,8 +86,8 @@ public class Event extends Task {
     public String saveData() {
         if (fromDate != null && toDate != null) {
             return "[E]" + super.toString()
-                    + " (from: " + fromDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a"))
-                    + " to: " + toDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) + ")";
+                         + " (from: " + fromDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a"))
+                         + " to: " + toDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) + ")";
         }
         return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
     }
@@ -101,8 +101,8 @@ public class Event extends Task {
     public String toString() {
         if (fromDate != null && toDate != null) {
             return "[E]" + super.toString()
-                    + " (from: " + fromDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a"))
-                    + " to: " + toDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) + ")";
+                         + " (from: " + fromDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a"))
+                         + " to: " + toDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) + ")";
         }
         return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
     }

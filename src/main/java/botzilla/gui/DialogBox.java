@@ -45,6 +45,7 @@ public class DialogBox extends HBox {
      */
     private void flip() {
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
+        dialog.getStyleClass().add("reply-label");
         Collections.reverse(tmp);
         this.getChildren().setAll(tmp);
         setAlignment(Pos.TOP_LEFT);
@@ -65,6 +66,26 @@ public class DialogBox extends HBox {
         return db;
     }
 
+    private void changeDialogStyle(String commandType) {
+        if (commandType == null || commandType.trim().isEmpty()) {
+            return;
+        }
+        String typeOfCommand = commandType.trim().split(" ")[0];
+        switch(typeOfCommand) {
+        case "todo":
+            dialog.getStyleClass().add("add-label");
+            break;
+        case "mark":
+            dialog.getStyleClass().add("marked-label");
+            break;
+        case "delete":
+            dialog.getStyleClass().add("delete-label");
+            break;
+        default:
+            // Do nothing
+        }
+    }
+
     /**
      * Returns a dialog box with the botzilla's dialog.
      *
@@ -72,10 +93,11 @@ public class DialogBox extends HBox {
      * @param img Botzilla image to be displayed.
      * @return DialogBox.
      */
-    public static DialogBox getBotzillaDialog(String text, Image img) {
+    public static DialogBox getBotzillaDialog(String text, Image img, String commandType) {
         assert text != null : "Botzilla text cannot be null";
         assert img != null : "Botzilla image cannot be null";
         var db = new DialogBox(text, img);
+        db.changeDialogStyle(commandType);
         db.flip();
         return db;
     }

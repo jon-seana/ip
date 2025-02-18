@@ -62,7 +62,7 @@ public class TaskList {
      */
     public void markDone(int index) throws BotzillaException {
         if (index < 0 || index >= tasks.size()) {
-            throw new BotzillaException("\t Error!! Please enter a valid task number you want to mark as done.");
+            throw new BotzillaException("Error!! Please enter a valid task number you want to mark as done.");
         }
         tasks.get(index).markAsDone();
     }
@@ -75,7 +75,7 @@ public class TaskList {
      */
     public void markUndone(int index) throws BotzillaException {
         if (index < 0 || index >= tasks.size()) {
-            throw new BotzillaException("\t Error!! Please enter a valid task number you want to mark as undone.");
+            throw new BotzillaException("Error!! Please enter a valid task number you want to mark as undone.");
         }
         tasks.get(index).markAsUndone();
     }
@@ -113,21 +113,21 @@ public class TaskList {
      */
     public String getTaskListString() {
         if (tasks.isEmpty()) {
-            return "\t You have no tasks in your list.";
+            return "You have no tasks in your list.";
         }
         return buildTaskList().toString();
     }
 
     private StringBuilder buildTaskList() {
         StringBuilder taskListString = new StringBuilder();
-        taskListString.append("\t Here are the tasks in your list:");
+        taskListString.append("Here are the tasks in your list:");
         int lengthOfList = tasks.size();
         for (int i = 0; i < lengthOfList; i++) {
             Task task = tasks.get(i);
             if (task != null) {
                 int taskNumber = i + 1;
-                taskListString.append("\n").append("\t ").append(taskNumber).append(".")
-                              .append(tasks.get(i).toString()).append("\n");
+                taskListString.append("\n").append(taskNumber).append(".")
+                                                              .append(tasks.get(i).toString());
             }
         }
         return taskListString;
@@ -140,6 +140,9 @@ public class TaskList {
      * @return String.
      */
     public String findTaskString(String keyword) {
+        if (tasks.isEmpty()) {
+            return "You have no tasks in your list.";
+        }
         ArrayList<Task> resultOfSearch = new ArrayList<>();
         for (Task task : tasks) {
             if (task.toString().contains(keyword)) {
@@ -147,17 +150,17 @@ public class TaskList {
             }
         }
         if (resultOfSearch.isEmpty()) {
-            return "\t Error!! No matching tasks found.";
+            return "Error!! No matching tasks found.";
         }
         StringBuilder findTaskString = new StringBuilder();
-        findTaskString.append("\t Here are the matching tasks in your list:");
+        findTaskString.append("Here are the matching tasks in your list:");
         int lengthOfList = resultOfSearch.size();
         for (int i = 0; i < lengthOfList; i++) {
             Task task = resultOfSearch.get(i);
             if (task != null) {
                 int taskNumber = i + 1;
-                findTaskString.append("\t ").append(taskNumber).append(".")
-                                                               .append(resultOfSearch.get(i).toString()).append("\n");
+                findTaskString.append("\n").append(taskNumber).append(".")
+                                                              .append(resultOfSearch.get(i).toString());
             }
         }
         return findTaskString.toString();
@@ -170,7 +173,7 @@ public class TaskList {
      */
     public String sortTaskList() {
         if (tasks.isEmpty()) {
-            return "\t You have no tasks in your list.";
+            return "You have no tasks in your list.";
         }
         String sortedDeadlines = sortDeadlines();
         String sortedEvents = sortEvents();
@@ -198,11 +201,11 @@ public class TaskList {
             return firstDate.compareTo(secondDate);
         });
         StringBuilder sortedEvents = new StringBuilder();
-        sortedEvents.append("\t Here are the sorted events in ascending order:");
+        sortedEvents.append("Here are the sorted events in ascending order:");
         int taskNumber = 1;
         for (String event : eventList) {
-            sortedEvents.append("\n").append("\t ").append(taskNumber++)
-                                                   .append(". ").append(event);
+            sortedEvents.append("\n").append(taskNumber++)
+                                     .append(". ").append(event);
         }
         return sortedEvents.toString();
     }
@@ -234,11 +237,11 @@ public class TaskList {
             return firstDate.compareTo(secondDate);
         });
         StringBuilder sortedDeadlines = new StringBuilder();
-        sortedDeadlines.append("\t Here are the sorted deadlines in ascending order:");
+        sortedDeadlines.append("Here are the sorted deadlines in ascending order:");
         int taskNumber = 1;
         for (String deadline : deadlineList) {
-            sortedDeadlines.append("\n").append("\t ").append(taskNumber++)
-                                                      .append(". ").append(deadline);
+            sortedDeadlines.append("\n").append(taskNumber++)
+                                        .append(". ").append(deadline);
         }
         return sortedDeadlines.toString();
     }

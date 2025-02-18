@@ -19,7 +19,7 @@ public class Todo extends Task {
     public static Todo createTodo(String input) {
         assert input != null && !input.trim().isEmpty() : "Input should not be null";
         try {
-            String description = input.substring(5).trim();
+            String description = input.substring(5).trim().replaceAll("\\s+", " ");
             if (description.isEmpty()) {
                 return null;
             }

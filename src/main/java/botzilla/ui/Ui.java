@@ -7,7 +7,7 @@ import botzilla.task.TaskList;
  * Represents the class Ui for the replies given to users.
  */
 public class Ui {
-    private static final String taskFirstLine = "\t Got it. I've added this task:";
+    private static final String taskFirstLine = "Got it. I've added this task:";
     private final Scanner scanner;
 
     /**
@@ -51,8 +51,8 @@ public class Ui {
      * @return String.
      */
     public String getPrintOutString(TaskList taskList) {
-        return taskFirstLine + "\n" + "\t   " + taskList.getTask().get(taskList.size() - 1).toString() + "\n"
-                + "\t Now you have " + taskList.size() + " tasks in the list.";
+        return taskFirstLine + "\n" + taskList.getTask().get(taskList.size() - 1).toString() + "\n"
+                + "Now you have " + taskList.size() + " tasks in the list.";
     }
 
     /**

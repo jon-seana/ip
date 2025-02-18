@@ -6,6 +6,7 @@ import botzilla.gui.MainWindow;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -30,9 +31,10 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.setTitle("Botzilla");
             stage.setResizable(true);
-            int height = 600;
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/Botzilla.png")));
+            int height = 700;
             stage.setMinHeight(height);
-            int width = 417;
+            int width = 450;
             stage.setMinWidth(width);
             fxmlLoader.<MainWindow>getController().setBotzilla(botzilla);
             stage.show();
