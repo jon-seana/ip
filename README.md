@@ -1,6 +1,6 @@
 # Botzilla User Guide
 
-![Ui.png](Ui.png)
+![Ui](https://github.com/user-attachments/assets/41115ec9-150c-48a6-bc6a-af4bac30b309)
 
 ## Introduction
 Botzilla is a **simple and lightweight** chatbot that helps you manage your tasks. It supports commands such as:
