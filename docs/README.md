@@ -8,10 +8,10 @@ Botzilla is a **simple and lightweight** chatbot that helps you manage your task
 - `deadline` - Add a deadline task
 - `event` - Add an event task
 - `list` - List all tasks
-- 'mark' and 'unmark' - Mark or unmark a task as done
+- `mark` and `unmark` - Mark or unmark a task as done
 - `delete` - Delete a task
 - `find` - Find tasks by keyword
-- 'sort' - Sort tasks by date in ascending order
+- `sort` - Sort tasks by date in ascending order
 
 > [!NOTE]
 > 
@@ -123,7 +123,7 @@ Exits the Botzilla application.
 bye
 ```
 
-> [!IMPORTANT NOTE]
+> [!NOTE]
 > 
 > - The task index refers to the index number shown in the displayed task list.
 > - The task index must be a positive integer 1, 2, 3, …
