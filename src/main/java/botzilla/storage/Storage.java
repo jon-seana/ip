@@ -22,7 +22,13 @@ public class Storage {
     private static final String FILE_PATH = "src/main/tasks.txt";
     private final ArrayList<Task> tasks = new ArrayList<>();
 
-    private static void ensureFileExist() {
+    /**
+     * Ensures that the file exists in the computer's local hard disk.
+     * If the file does not exist, it will create a new file.
+     *
+     * @throws BotzillaException If there is an error creating the new file.
+     */
+    private static void ensureFileExist() throws BotzillaException {
         File file = new File(Storage.FILE_PATH);
         try {
             if (!file.exists()) {
@@ -31,7 +37,7 @@ public class Storage {
             }
             assert file.exists() : "File is not readable at " + FILE_PATH;
         } catch (IOException e) {
-            System.out.println("Error creating file");
+            throw new BotzillaException("Error creating file!");
         }
     }
 
@@ -39,7 +45,7 @@ public class Storage {
      * Loads task from the tasks.txt file which is saved in the hard disk of the computer.
      *
      * @return ArrayList (Type: Task) Array of tasks stored in an arraylist.
-     * @throws BotzillaException Custom exception created for botzilla class.
+     * @throws BotzillaException If there is an error loading the tasks from the file.
      */
     public ArrayList<Task> loadTask() throws BotzillaException {
         ensureFileExist();
@@ -50,11 +56,16 @@ public class Storage {
                 processTaskLine(line);
             }
         } catch (IOException error) {
-            System.out.println("No tasks found!");
+            throw new BotzillaException("Error loading tasks from file!");
         }
         return tasks;
     }
 
+    /**
+     * Loads the task list line by line and processes it according to task type.
+     *
+     * @param line Task line.
+     */
     private void processTaskLine(String line) {
         assert !line.trim().isEmpty() : "Encountered empty line in task file!";
         String[] parts = line.split(" ");
@@ -76,6 +87,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Creates a new Todo task from the given input.
+     *
+     * @param line The task line from the file.
+     * @param isDone The status of the task from the file.
+     * @return Todo.
+     */
     private Todo createTodoFromLine(String line, boolean isDone) {
         String description = line.substring(7).trim();
         Todo toDo = new Todo(description);
@@ -85,6 +103,13 @@ public class Storage {
         return toDo;
     }
 
+    /**
+     * Creates a new Deadline task from the given input.
+     *
+     * @param line The task line from the file.
+     * @param isDone The status of the task from the file.
+     * @return Deadline.
+     */
     private Deadline createDeadlineFromLine(String line, boolean isDone) {
         String description = line.substring(7, line.indexOf("(by:")).trim();
         String date = line.substring(line.indexOf(":") + 2, line.indexOf(")")).trim();
@@ -95,6 +120,13 @@ public class Storage {
         return deadline;
     }
 
+    /**
+     * Creates a new Event task from the given input.
+     *
+     * @param line The task line from the file.
+     * @param isDone The status of the task from the file.
+     * @return Event.
+     */
     private Event createEventFromLine(String line, boolean isDone) {
         String description = line.substring(7, line.indexOf("(from:")).trim();
         String from = line.substring(line.indexOf("m:") + 3, line.indexOf("to:")).trim();
@@ -110,20 +142,21 @@ public class Storage {
      * Saves tasks when it is taken in as a parameter.
      * Task will be saved to the computer's local hard disk.
      *
-     * @param tasks Tasks.
+     * @param tasks Tasks input by user.
+     * @throws BotzillaException If there is an error saving the tasks to the file.
      */
-    public void saveTask(TaskList tasks) {
+    public void saveTask(TaskList tasks) throws BotzillaException {
         assert tasks != null : "Task should not be null in saveTask() method";
         ArrayList<Task> taskList = tasks.getTask();
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH));
             for (Task task : taskList) {
                 assert task != null : "Encountered null task while saving";
-                writer.write(task.saveData() + "\n");
+                writer.write(task + "\n");
             }
             writer.close();
         } catch (IOException error) {
-            System.out.println("Error Occurred! Trying again...");
+            throw new BotzillaException("Error saving tasks to file!");
         }
     }
 }

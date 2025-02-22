@@ -2,19 +2,24 @@ package botzilla.task;
 
 
 /**
- * Represents the class for todo task.
+ * Represents the class for the task todo.
+ * Contains methods to create todo as well as relevant methods required for todo.
  */
 public class Todo extends Task {
+    /**
+     * Represents a constructor for the todo class.
+     *
+     * @param description Description of todo.
+     */
     public Todo(String description) {
         super(description);
     }
+
     /**
-     * Creates a new Todo task from the given input.
-     * The input should start with "todo" followed by a description.
-     * If the description is missing or empty, the corresponding UI error message is shown.
+     * Creates a todo from user description input.
      *
-     * @param input the full user input string.
-     * @return a new Todo task if the description is valid; otherwise, returns null.
+     * @param input Input from user to describe the todo task.
+     * @return Todo A new todo object.
      */
     public static Todo createTodo(String input) {
         assert input != null && !input.trim().isEmpty() : "Input should not be null";
@@ -30,17 +35,7 @@ public class Todo extends Task {
     }
 
     /**
-     * Method for creating a string when data is saved.
-     *
-     * @return String.
-     */
-    @Override
-    public String saveData() {
-        return "[T]" + super.toString();
-    }
-
-    /**
-     * Method for todo toString implementation.
+     * Formats the string according to the todo task.
      *
      * @return String.
      */
