@@ -8,7 +8,7 @@ public class Task {
     protected boolean isDone;
 
     /**
-     * The constructor for task class.
+     * Represents a constructor for task class.
      *
      * @param description Type of task to be done.
      */
@@ -18,7 +18,7 @@ public class Task {
     }
 
     /**
-     * Method to get status icon "X" or " ", which is a blank.
+     * Retrieves the status icon "X" or " ", to mark as done and not done respectively.
      *
      * @return String.
      */
@@ -27,30 +27,21 @@ public class Task {
     }
 
     /**
-     * Method to make isDone = true.
+     * Marks isDone as true.
      */
     public void markAsDone() {
         isDone = true;
     }
 
     /**
-     * Method to make isDone = false.
+     * Marks isDone as false.
      */
     public void markAsUndone() {
         isDone = false;
     }
 
     /**
-     * Method for creating a string when data is saved.
-     *
-     * @return String.
-     */
-    public String saveData() {
-        return description;
-    }
-
-    /**
-     * Method for task toString implementation.
+     * Formats the string according to the respective task's implementation.
      *
      * @return String.
      */

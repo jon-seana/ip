@@ -12,8 +12,8 @@ import botzilla.task.Todo;
 import botzilla.ui.Ui;
 
 /**
- * Represents a class for the Parser constructor and parse method which takes in a String input and
- * selects the appropriate actions to be taken based on the type of input (e.g. todo, list, bye, etc...).
+ * The Parser class provides methods to parse user inputs.
+ * It is done by extracting the first word of the input and then performing the relevant actions.
  */
 public class Parser {
     private final TaskList taskList;
@@ -21,11 +21,11 @@ public class Parser {
     private final Ui ui;
 
     /**
-     * The constructor for Parser class.
+     * Creates a Parser object.
      *
-     * @param taskList Tasklist.
-     * @param storage Storage.
-     * @param ui Ui.
+     * @param taskList Tasklist object.
+     * @param storage Storage object.
+     * @param ui Ui object.
      */
     public Parser(TaskList taskList, Storage storage, Ui ui) {
         this.taskList = taskList;
@@ -34,10 +34,11 @@ public class Parser {
     }
 
     /**
-     * Choose a variety of actions depending on the String input. Returns a String output for that action.
+     * Chooses a method to execute based on the input command.
+     * Extracts the first word of the input and then performs the relevant actions.
      *
-     * @param input Input command.
-     * @return String.
+     * @param input Input command entered by the user.
+     * @return Returns a String object as a result from the parsed input command.
      */
     public String parseString(String input) {
         try {
@@ -71,6 +72,14 @@ public class Parser {
     }
 
     // utility methods
+    /**
+     * Parses the index of the task to be marked or unmarked.
+     * Adds checks to ensure that the index is a number and is within the bounds of the task list.
+     *
+     * @param input Input index entered by user to be marked or unmarked.
+     * @return Index of the task to be marked or unmarked.
+     * @throws BotzillaException If the index is not a number or is out of bounds.
+     */
     private int parseIndex(String input) throws BotzillaException {
         try {
             String[] parts = input.split(" ");
@@ -80,6 +89,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Checks for duplicate instructions within a single command input line.
+     *
+     * @param input Input command entered by user.
+     * @throws BotzillaException If there are duplicate instructions within a single command input line.
+     */
     private void duplicateInstrChecker(String input) throws BotzillaException {
         String[] tokens = input.split("\\s+");
         if (tokens.length > 2) {
@@ -89,12 +104,12 @@ public class Parser {
     }
 
     /**
-     * Parses a date string into a LocalDateTime object.
+     * Parses a date string into a LocalDateTime object of a custom specified date and time format.
      *
      * @param date Date string.
      * @return LocalDateTime.
      */
-    public static LocalDateTime parseDate(String date) {
+    public static LocalDateTime parseDate(String date) throws DateTimeParseException {
         DateTimeFormatter dayFirstFormat = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
         DateTimeFormatter yearFirstFormat = DateTimeFormatter.ofPattern("yyyy-MM-d HHmm");
         if (date.contains("/")) {
@@ -107,6 +122,14 @@ public class Parser {
     }
 
     // Methods to help parseString method
+    /**
+     * Handles the mark command.
+     * Marks a task as done.
+     *
+     * @param input Input command entered by user.
+     * @return String.
+     * @throws BotzillaException If the task list is empty or the index is invalid.
+     */
     private String handleMarkCommand(String input) throws BotzillaException {
         duplicateInstrChecker(input);
         String trimmedInput = input.replaceAll("\\s+", " ");
@@ -120,6 +143,14 @@ public class Parser {
                 + taskList.getTask().get(index - 1).toString();
     }
 
+    /**
+     * Handles the unmark command.
+     * Marks a task as not done.
+     *
+     * @param input Input command entered by user.
+     * @return String.
+     * @throws BotzillaException If the task list is empty or the index is invalid.
+     */
     private String handleUnmarkCommand(String input) throws BotzillaException {
         duplicateInstrChecker(input);
         String trimmedInput = input.replaceAll("\\s+", " ");
@@ -133,6 +164,14 @@ public class Parser {
                 + taskList.getTask().get(index - 1).toString();
     }
 
+    /**
+     * Handles the todo command.
+     * Adds a todo task to the task list and saves it to the storage.
+     *
+     * @param input Input command entered by user.
+     * @return String.
+     * @throws BotzillaException If the description is empty.
+     */
     private String handleTodoCommand(String input) throws BotzillaException {
         Todo createTodo = Todo.createTodo(input);
         if (createTodo == null) {
@@ -143,6 +182,14 @@ public class Parser {
         return ui.getPrintOutString(taskList);
     }
 
+    /**
+     * Handles the deadline command.
+     * Adds a deadline task to the task list and saves it to the storage.
+     *
+     * @param input Input command entered by user.
+     * @return String.
+     * @throws BotzillaException If the description or date is empty.
+     */
     private String handleDeadlineCommand(String input) throws BotzillaException {
         Deadline createDeadline = Deadline.createDeadline(input);
         if (createDeadline == null) {
@@ -153,6 +200,14 @@ public class Parser {
         return ui.getPrintOutString(taskList);
     }
 
+    /**
+     * Handles the event command.
+     * Adds an event task to the task list and saves it to the storage.
+     *
+     * @param input Input command entered by user.
+     * @return String.
+     * @throws BotzillaException If the description or date is empty.
+     */
     private String handleEventCommand(String input) throws BotzillaException {
         Event createEvent = Event.createEvent(input);
         if (createEvent == null) {
@@ -164,6 +219,14 @@ public class Parser {
         return ui.getPrintOutString(taskList);
     }
 
+    /**
+     * Handles the delete command.
+     * Deletes a task from the task list and saves the new task List to the storage.
+     *
+     * @param input Input command entered by user to delete a task.
+     * @return String.
+     * @throws BotzillaException If the task number is invalid or out of range.
+     */
     private String handleDeleteCommand(String input) throws BotzillaException {
         duplicateInstrChecker(input);
         String trimmedInput = input.replaceAll("\\s+", " ");
@@ -177,6 +240,14 @@ public class Parser {
                 + "\n" + "Now you have " + taskList.size() + " tasks in the list.";
     }
 
+    /**
+     * Handles the find command.
+     * Finds tasks containing the keyword(s) and returns them as a string formatted in a list format.
+     *
+     * @param input Input command entered by user to find tasks by keywords.
+     * @return String.
+     * @throws BotzillaException If the keyword is empty or invalid format.
+     */
     private String handleFindCommand(String input) throws BotzillaException {
         if (input.length() <= 5) {
             throw new BotzillaException("Find command requires this format:" + "\n" + "find <keyword(s)>");

@@ -2,13 +2,14 @@ package botzilla.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Objects;
 
 import botzilla.command.Parser;
 import botzilla.exception.BotzillaException;
 
 /**
  * Represents the class for the task event.
- * Contains method for creating an event as well as relevant methods required for event.
+ * Contains methods for creating an event as well as relevant methods required for event.
  */
 public class Event extends Task {
     protected String from;
@@ -17,7 +18,7 @@ public class Event extends Task {
     protected LocalDateTime toDate;
 
     /**
-     * Constructor for event class with LocalDateTime as the date and time type.
+     * Represents a constructor for event class with LocalDateTime as the date and time type.
      *
      * @param description Description of event.
      * @param from start date and time of event in LocalDateTime object type.
@@ -30,7 +31,7 @@ public class Event extends Task {
     }
 
     /**
-     * Constructor for event class with String as the date and time type.
+     * Represents a constructor for event class with String as the date and time type.
      *
      * @param description Description of event.
      * @param from start date and time of event in String object type.
@@ -43,19 +44,45 @@ public class Event extends Task {
     }
 
     /**
-     * Method for creating event.
+     * Creates an event from user description input.
      *
-     * @param input Input.
-     * @return Event
+     * @param input Input from user to describe the event task.
+     * @return Event A new event object.
      */
     public static Event createEvent(String input) throws BotzillaException {
         assert input != null && !input.trim().isEmpty() : "Input should not be null";
         if (!input.contains(" /from ") || !input.contains(" /to ")) {
             return null;
         }
-        String[] eventInput = input.split(" /from ");
-        String description = eventInput[0].substring(6).trim().replaceAll("\\s+", " ");
-        if (description.isEmpty()) {
+        try {
+            // Description, from and to.
+            String description = Objects.requireNonNull(checkEventDescription(input))[0];
+            String from = Objects.requireNonNull(checkEventDescription(input))[1];
+            String to = Objects.requireNonNull(checkEventDescription(input))[2];
+            // From and To dates.
+            LocalDateTime fromDate = Parser.parseDate(from);
+            LocalDateTime toDate = Parser.parseDate(to);
+            // To ensure that From and To dates are in the correct order.
+            if (!fromDate.isBefore(toDate)) {
+                throw new BotzillaException("From date and time should be before To date and time.");
+            }
+            return new Event(description, fromDate, toDate);
+        } catch (DateTimeParseException | ArrayIndexOutOfBoundsException | NullPointerException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Checks the description of the event task to ensure it is of valid format.
+     *
+     * @param description Description of event task.
+     * @return String[].
+     * @throws ArrayIndexOutOfBoundsException If the event description is empty.
+     */
+    private static String[] checkEventDescription(String description) throws ArrayIndexOutOfBoundsException {
+        String[] eventInput = description.split(" /from ");
+        String eventDescription = eventInput[0].substring(6).trim().replaceAll("\\s+", " ");
+        if (eventDescription.isEmpty()) {
             return null;
         }
         String from = (eventInput[1].split(" /to "))[0].trim();
@@ -63,37 +90,15 @@ public class Event extends Task {
         if (from.isEmpty() || to.isEmpty()) {
             return null;
         }
-        // Main happy path code
-        try {
-            LocalDateTime fromDate = Parser.parseDate(from);
-            LocalDateTime toDate = Parser.parseDate(to);
-            // To ensure that From and To dates are in the correct order
-            if (!fromDate.isBefore(toDate)) {
-                throw new BotzillaException("From date and time should be before To date and time.");
-            }
-            return new Event(description, fromDate, toDate);
-        } catch (DateTimeParseException e) {
-            return null;
-        }
+        String[] descriptionAndFromAndTo = new String[3];
+        descriptionAndFromAndTo[0] = eventDescription;
+        descriptionAndFromAndTo[1] = from;
+        descriptionAndFromAndTo[2] = to;
+        return descriptionAndFromAndTo;
     }
 
     /**
-     * Method for creating a string when data is saved.
-     *
-     * @return String.
-     */
-    @Override
-    public String saveData() {
-        if (fromDate != null && toDate != null) {
-            return "[E]" + super.toString()
-                         + " (from: " + fromDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a"))
-                         + " to: " + toDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) + ")";
-        }
-        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
-    }
-
-    /**
-     * Method for event toString implementation.
+     * Formats the string according to the event task.
      *
      * @return String.
      */

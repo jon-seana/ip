@@ -52,8 +52,8 @@ application {
 }
 
 shadowJar {
-    archiveBaseName = "botzillaJarFile2"
-    archiveFileName = 'botzillaJarFile2.jar'
+    archiveBaseName = "BotzillaV2"
+    archiveFileName = 'BotzillaV2.jar'
     archiveClassifier = null
     manifest {
         attributes 'Main-Class': 'botzilla.gui.Launcher'

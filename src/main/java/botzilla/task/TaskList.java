@@ -6,20 +6,20 @@ import java.util.ArrayList;
 import botzilla.exception.BotzillaException;
 
 /**
- * Represents a class for common task related commands.
+ * Represents a class for a collection of common task related methods.
  */
 public class TaskList {
     private final ArrayList<Task> tasks;
 
     /**
-     * Method for assigning an arraylist.
+     * Assigns an empty arrayList to the tasks.
      */
     public TaskList() {
         this.tasks = new ArrayList<>();
     }
 
     /**
-     * Method for assigning this.tasks to the tasks input parameter.
+     * Assigns current tasks to the tasks input parameter.
      *
      * @param tasks Tasks.
      */
@@ -28,7 +28,7 @@ public class TaskList {
     }
 
     /**
-     * Method to return the current number of tasks registered.
+     * Returns the number of tasks in the arrayList.
      *
      * @return int Number of task.
      */
@@ -37,7 +37,7 @@ public class TaskList {
     }
 
     /**
-     * Method to add task into the arrayList.
+     * Adds a task to the arrayList.
      *
      * @param task Task.
      */
@@ -46,7 +46,7 @@ public class TaskList {
     }
 
     /**
-     * Method to get arrayList.
+     * Returns the arrayList of tasks.
      *
      * @return ArrayList (Type: Task) List of tasks.
      */
@@ -55,10 +55,10 @@ public class TaskList {
     }
 
     /**
-     * Method to mark a task done.
+     * Marks a task as done.
      *
      * @param index Task number to be marked done.
-     * @throws BotzillaException Custom type of exception thrown.
+     * @throws BotzillaException When index input by user is out of the acceptable range.
      */
     public void markDone(int index) throws BotzillaException {
         if (index < 0 || index >= tasks.size()) {
@@ -68,10 +68,10 @@ public class TaskList {
     }
 
     /**
-     * Method to mark a task as undone.
+     * Marks a task as undone.
      *
      * @param index Task number to be marked undone.
-     * @throws BotzillaException Custom type of exception thrown.
+     * @throws BotzillaException When index input by user is out of the acceptable range.
      */
     public void markUndone(int index) throws BotzillaException {
         if (index < 0 || index >= tasks.size()) {
@@ -81,10 +81,10 @@ public class TaskList {
     }
 
     /**
-     * Method to delete task.
+     * Deletes a task from the arrayList.
      *
-     * @param input Command input containing the task number to be deleted.
-     * @return String.
+     * @param input Command input from user containing the task number to be deleted.
+     * @return String The deleted task description.
      */
     public String deleteTask(String input) {
         try {
@@ -98,7 +98,7 @@ public class TaskList {
     }
 
     /**
-     * Method to check if the taskList is empty.
+     * Checks if the arrayList is empty.
      *
      * @return boolean.
      */
@@ -107,7 +107,7 @@ public class TaskList {
     }
 
     /**
-     * Method to return the list of tasks in a string format.
+     * Returns the task list in a string format.
      *
      * @return String.
      */
@@ -118,6 +118,11 @@ public class TaskList {
         return buildTaskList().toString();
     }
 
+    /**
+     * Builds the task list in a string format using StringBuilder.
+     *
+     * @return StringBuilder.
+     */
     private StringBuilder buildTaskList() {
         StringBuilder taskListString = new StringBuilder();
         taskListString.append("Here are the tasks in your list:");
@@ -134,9 +139,9 @@ public class TaskList {
     }
 
     /**
-     * Method to find a list of tasks from a keyword command input from user.
+     * Finds a task in the arrayList based on the keyword input by user.
      *
-     * @param keyword Command to be typed in by user.
+     * @param keyword A task that the user wants to find in the arrayList.
      * @return String.
      */
     public String findTaskString(String keyword) {
@@ -144,6 +149,8 @@ public class TaskList {
             return "You have no tasks in your list.";
         }
         ArrayList<Task> resultOfSearch = new ArrayList<>();
+
+        // Finds the task in the arrayList based on the keyword input by user.
         for (Task task : tasks) {
             if (task.toString().contains(keyword)) {
                 resultOfSearch.add(task);
@@ -167,7 +174,7 @@ public class TaskList {
     }
 
     /**
-     * The method used to sort time sensitive tasks in ascending order.
+     * Sorts the task list for tasks type of deadlines and events in ascending order of date and time.
      *
      * @return String.
      */
@@ -180,6 +187,11 @@ public class TaskList {
         return sortedDeadlines + "\n\n" + sortedEvents;
     }
 
+    /**
+     * Filters the task list for tasks of type event.
+     *
+     * @return String.
+     */
     private String sortEvents() {
         ArrayList<String> eventList = new ArrayList<>();
         for (Task task : tasks) {
@@ -192,9 +204,15 @@ public class TaskList {
         return sortEventsOnStartDate(eventList);
     }
 
+    /**
+     * Sorts the events based on the start date and time in ascending order.
+     *
+     * @param eventList A list of events.
+     * @return String A string format of the sorted event.
+     */
     private String sortEventsOnStartDate(ArrayList<String> eventList) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a");
-        // Only sort based on the start date of each event
+        // Sort based on the start date and time of each event in ascending order.
         eventList.sort((s1, s2) -> {
             LocalDateTime firstDate = extractEventStartDate(s1, formatter);
             LocalDateTime secondDate = extractEventStartDate(s2, formatter);
@@ -210,6 +228,13 @@ public class TaskList {
         return sortedEvents.toString();
     }
 
+    /**
+     * Extracts the event start date and time from the event task description.
+     *
+     * @param taskString The event task description in string format.
+     * @param formatter The custom date and time format.
+     * @return LocalDateTime The start date and time of the event.
+     */
     private LocalDateTime extractEventStartDate(String taskString, DateTimeFormatter formatter) {
         int startIndex = taskString.indexOf("from:") + 5;
         int endIndex = taskString.indexOf("to:") - 1;
@@ -217,6 +242,11 @@ public class TaskList {
         return LocalDateTime.parse(date, formatter);
     }
 
+    /**
+     * Filters the task list for tasks of type deadline.
+     *
+     * @return String.
+     */
     private String sortDeadlines() {
         ArrayList<String> deadlineList = new ArrayList<>();
         for (Task task : tasks) {
@@ -229,8 +259,15 @@ public class TaskList {
         return sortDeadlinesOnStartDate(deadlineList);
     }
 
+    /**
+     * Sorts the deadlines based on the by date and time in ascending order.
+     *
+     * @param deadlineList A list of deadlines.
+     * @return String A string format of the sorted deadlines.
+     */
     private String sortDeadlinesOnStartDate(ArrayList<String> deadlineList) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a");
+        // Sort based on the by date and time of each deadline in ascending order.
         deadlineList.sort((s1, s2) -> {
             LocalDateTime firstDate = extractDeadlineDate(s1, formatter);
             LocalDateTime secondDate = extractDeadlineDate(s2, formatter);
@@ -246,6 +283,13 @@ public class TaskList {
         return sortedDeadlines.toString();
     }
 
+    /**
+     * Extracts the deadline by date and time from the deadline task description.
+     *
+     * @param taskString The deadline task description in string format.
+     * @param formatter The custom date and time format.
+     * @return LocalDateTime The deadline by date and time.
+     */
     private LocalDateTime extractDeadlineDate(String taskString, DateTimeFormatter formatter) {
         int startIndex = taskString.indexOf("by:") + 4;
         int endIndex = taskString.indexOf(")");

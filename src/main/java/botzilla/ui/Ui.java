@@ -11,14 +11,14 @@ public class Ui {
     private final Scanner scanner;
 
     /**
-     * The constructor for the Ui class.
+     * Represents a constructor for the Ui class.
      */
     public Ui() {
         scanner = new Scanner(System.in);
     }
 
     /**
-     * Method to read the next line of input from user.
+     * Reads the next line of the input from the user.
      *
      * @return String.
      */
@@ -27,7 +27,7 @@ public class Ui {
     }
 
     /**
-     * Method to return the goodbye message.
+     * Returns the goodbye message.
      *
      * @return String.
      */
@@ -36,7 +36,7 @@ public class Ui {
     }
 
     /**
-     * Method to return the mark and unmark of empty list warning message.
+     * Returns the mark and unmark of task warning message when list is empty.
      *
      * @return String.
      */
@@ -45,7 +45,7 @@ public class Ui {
     }
 
     /**
-     * Method to print out the message after executing a task input from user.
+     * Returns the message after executing a task input from user.
      *
      * @param taskList Tasklist.
      * @return String.
@@ -56,7 +56,7 @@ public class Ui {
     }
 
     /**
-     * Method to print out the warning message for invalid command.
+     * Returns a warning message for invalid commands.
      *
      * @return String.
      */
@@ -65,9 +65,9 @@ public class Ui {
     }
 
     /**
-     * Method to print out the custom warning message.
+     * Prints a custom warning message for errors to the command line interface.
      *
-     * @param errorMessage Error message to be printed to user.
+     * @param errorMessage Error message to be shown in command line interface.
      */
     public void showErrorMessage(String errorMessage) {
         System.out.println(errorMessage);

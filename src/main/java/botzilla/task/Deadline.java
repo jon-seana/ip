@@ -2,6 +2,7 @@ package botzilla.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Objects;
 
 import botzilla.command.Parser;
 
@@ -14,7 +15,7 @@ public class Deadline extends Task {
     protected String date;
 
     /**
-     * Constructor for the deadline class with LocalDateTime as the date and time type.
+     * Represents a constructor for the deadline class with LocalDateTime as the date and time type.
      *
      * @param description Description of deadline.
      * @param byDate Due date and time of description in LocalDateTime object type.
@@ -25,7 +26,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Constructor for the deadline class with String as the date and time type.
+     * Represents a constructor for the deadline class with String as the date and time type.
      *
      * @param description Description of deadline.
      * @param byDate Due date and time of description in String object type.
@@ -36,46 +37,50 @@ public class Deadline extends Task {
     }
 
     /**
-     * Method for creating deadline task and to check for errors and formatting issues.
+     * Creates a deadline from user description input.
      *
-     * @param input Input.
-     * @return Deadline Deadline.
+     * @param input Input from user to describe the deadline task.
+     * @return Deadline A new deadline object.
      */
     public static Deadline createDeadline(String input) {
         assert input != null && !input.trim().isEmpty() : "Input should not be null";
         if (!input.contains(" /by ")) {
             return null;
         }
-        String[] deadlineInput = input.split(" /by ");
-        String description = deadlineInput[0].substring(9).trim().replaceAll("\\s+", " ");
-        String date = deadlineInput[1].trim();
-        if (description.isEmpty() || date.isEmpty()) {
-            return null;
-        }
         try {
+            // Date and description.
+            String date = Objects.requireNonNull(checkDeadlineDescription(input))[0];
+            String description = Objects.requireNonNull(checkDeadlineDescription(input))[1];
+            // byDate variable.
             LocalDateTime byDate = Parser.parseDate(date);
             return new Deadline(description, byDate);
-        } catch (DateTimeParseException e) {
+        } catch (DateTimeParseException | ArrayIndexOutOfBoundsException | NullPointerException e) {
             return null;
         }
     }
 
     /**
-     * Method for creating a string when data is saved.
+     * Checks the description of the deadline task to ensure it is of valid format.
      *
-     * @return String.
+     * @param description Description of deadline task.
+     * @return String[].
+     * @throws ArrayIndexOutOfBoundsException If the deadline description is empty.
      */
-    @Override
-    public String saveData() {
-        if (byDate != null) {
-            return "[D]" + super.toString()
-                         + " (by: " + byDate.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) + ")";
+    private static String[] checkDeadlineDescription(String description) throws ArrayIndexOutOfBoundsException {
+        String[] deadlineInput = description.split(" /by ");
+        String deadlineDescription = deadlineInput[0].substring(9).trim().replaceAll("\\s+", " ");
+        String date = deadlineInput[1].trim();
+        if (deadlineDescription.isEmpty() || date.isEmpty()) {
+            return null;
         }
-        return "[D]" + super.toString() + " (by: " + date + ")";
+        String[] dateAndDescription = new String[2];
+        dateAndDescription[0] = date;
+        dateAndDescription[1] = deadlineDescription;
+        return dateAndDescription;
     }
 
     /**
-     * Method for deadline toString implementation.
+     * Formats the string according to the deadline task.
      *
      * @return String.
      */

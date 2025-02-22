@@ -15,8 +15,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 /**
- * Represents a dialog box consisting of an ImageView to represent the speaker's face
- * and a label containing text from the speaker.
+ * Represents a dialog box consisting of an ImageView to represent the speaker's and botzilla image.
+ * And a label containing text from the speaker and response from botzilla.
  */
 public class DialogBox extends HBox {
     @FXML
@@ -24,6 +24,12 @@ public class DialogBox extends HBox {
     @FXML
     private ImageView displayPicture;
 
+    /**
+     * Initializes the dialog box object.
+     *
+     * @param text Text to be displayed, from user and botzilla.
+     * @param img Image to be displayed, from user and botzilla.
+     */
     private DialogBox(String text, Image img) {
         assert text != null : "DialogBox text cannot be null";
         assert img != null : "DialogBox image cannot be null";
@@ -52,7 +58,7 @@ public class DialogBox extends HBox {
     }
 
     /**
-     * Returns a dialog box with the user's dialog.
+     * Returns a dialog box with the user's dialog response and image.
      *
      * @param text Text to be displayed from user.
      * @param img User image to be displayed.
@@ -66,6 +72,7 @@ public class DialogBox extends HBox {
         return db;
     }
 
+    /** Changes the colour style of the dialog box based on the command type. */
     private void changeDialogStyle(String commandType) {
         if (commandType == null || commandType.trim().isEmpty()) {
             return;
@@ -87,7 +94,7 @@ public class DialogBox extends HBox {
     }
 
     /**
-     * Returns a dialog box with the botzilla's dialog.
+     * Returns a dialog box with the botzilla's dialog response and image.
      *
      * @param text Text to be displayed from botzilla.
      * @param img Botzilla image to be displayed.
@@ -97,7 +104,7 @@ public class DialogBox extends HBox {
         assert text != null : "Botzilla text cannot be null";
         assert img != null : "Botzilla image cannot be null";
         var db = new DialogBox(text, img);
-        db.changeDialogStyle(commandType);
+        db.changeDialogStyle(commandType.toLowerCase());
         db.flip();
         return db;
     }
