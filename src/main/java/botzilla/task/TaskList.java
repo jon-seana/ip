@@ -159,6 +159,16 @@ public class TaskList {
         if (resultOfSearch.isEmpty()) {
             return "Error!! No matching tasks found.";
         }
+        return buildFindTaskString(resultOfSearch).toString();
+    }
+
+    /**
+     * Builds the find task string in a custom string format using StringBuilder.
+     *
+     * @param resultOfSearch The list of tasks that match the keyword input by user.
+     * @return StringBuilder.
+     */
+    private static StringBuilder buildFindTaskString(ArrayList<Task> resultOfSearch) {
         StringBuilder findTaskString = new StringBuilder();
         findTaskString.append("Here are the matching tasks in your list:");
         int lengthOfList = resultOfSearch.size();
@@ -170,7 +180,7 @@ public class TaskList {
                                                               .append(resultOfSearch.get(i).toString());
             }
         }
-        return findTaskString.toString();
+        return findTaskString;
     }
 
     /**
@@ -218,6 +228,16 @@ public class TaskList {
             LocalDateTime secondDate = extractEventStartDate(s2, formatter);
             return firstDate.compareTo(secondDate);
         });
+        return buildSortedEvents(eventList).toString();
+    }
+
+    /**
+     * Builds the sorted events in a custom string format using StringBuilder.
+     *
+     * @param eventList The list of sorted events in ascending order.
+     * @return StringBuilder.
+     */
+    private StringBuilder buildSortedEvents(ArrayList<String> eventList) {
         StringBuilder sortedEvents = new StringBuilder();
         sortedEvents.append("Here are the sorted events in ascending order:");
         int taskNumber = 1;
@@ -225,7 +245,7 @@ public class TaskList {
             sortedEvents.append("\n").append(taskNumber++)
                                      .append(". ").append(event);
         }
-        return sortedEvents.toString();
+        return sortedEvents;
     }
 
     /**
@@ -273,6 +293,16 @@ public class TaskList {
             LocalDateTime secondDate = extractDeadlineDate(s2, formatter);
             return firstDate.compareTo(secondDate);
         });
+        return buildSortedDeadlines(deadlineList).toString();
+    }
+
+    /**
+     * Builds the sorted deadlines in a custom string format using StringBuilder.
+     *
+     * @param deadlineList The list of sorted deadlines in ascending order.
+     * @return StringBuilder.
+     */
+    private StringBuilder buildSortedDeadlines(ArrayList<String> deadlineList) {
         StringBuilder sortedDeadlines = new StringBuilder();
         sortedDeadlines.append("Here are the sorted deadlines in ascending order:");
         int taskNumber = 1;
@@ -280,7 +310,7 @@ public class TaskList {
             sortedDeadlines.append("\n").append(taskNumber++)
                                         .append(". ").append(deadline);
         }
-        return sortedDeadlines.toString();
+        return sortedDeadlines;
     }
 
     /**
