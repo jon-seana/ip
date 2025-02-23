@@ -16,6 +16,7 @@ Botzilla is a **simple and lightweight** chatbot that helps you manage your task
 > [!NOTE]
 > 
 > - The chatbot is case-insensitive, so you can type commands in any case.
+> - If any text is cut off in the application, you may resize the GUI to expand it wider.
 
 ---
 
