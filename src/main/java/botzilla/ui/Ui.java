@@ -18,15 +18,6 @@ public class Ui {
     }
 
     /**
-     * Reads the next line of the input from the user.
-     *
-     * @return String.
-     */
-    public String readLine() {
-        return scanner.nextLine();
-    }
-
-    /**
      * Returns the goodbye message.
      *
      * @return String.
