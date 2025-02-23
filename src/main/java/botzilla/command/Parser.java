@@ -252,7 +252,7 @@ public class Parser {
         if (input.length() <= 5) {
             throw new BotzillaException("Find command requires this format:" + "\n" + "find <keyword(s)>");
         }
-        String keyword = input.substring(4).replaceAll("\\s+", " ");
+        String keyword = input.substring(4).replaceAll("\\s+", " ").trim();
         return taskList.findTaskString(keyword);
     }
 }
